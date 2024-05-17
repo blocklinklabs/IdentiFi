@@ -27,7 +27,7 @@ const tabs = [
     ),
     name: "AI",
     feature: "Now with Q&A",
-    description: "Ask literally anything. Bird Will answer.",
+    description: "Ask literally anything. identiBot Will answer.",
     more: (
       <div className="text-purple-600 flex items-center">
         Learn more <PiArrowRight className="ml-1 text-sm" />
@@ -39,8 +39,8 @@ const tabs = [
     icon: (
       <PiBookOpenTextLight className="text-3xl mr-2 text-red-600 bg-red-100 p-1 rounded-md" />
     ),
-    name: "Wikis",
-    description: "Centralize your knowledge. Make it accessible.",
+    name: "Create ID",
+    description: "Get your DID on the blockchain.",
     more: (
       <div className="text-red-600 flex items-center">
         Learn more <PiArrowRight className="ml-1 text-sm" />
@@ -53,8 +53,8 @@ const tabs = [
     icon: (
       <PiTargetLight className="text-3xl mr-2 text-blue-600 bg-blue-100 p-1 rounded-md" />
     ),
-    name: "Projects",
-    description: "Manage complex projects without the chaos",
+    name: "Privacy ",
+    description: "Control who sees your information",
     more: (
       <div className="text-blue-600 flex items-center">
         Learn more <PiArrowRight className="ml-1 text-sm" />
@@ -67,8 +67,8 @@ const tabs = [
     icon: (
       <PiFileThin className="text-3xl mr-2 text-yellow-600 bg-yellow-100 p-1 rounded-md" />
     ),
-    name: "Docs",
-    description: "Simple, powerfulm beautiful. Next-gen notes & docs.",
+    name: "Find Jobs",
+    description: "Discover developer opportunities.",
     more: (
       <div className="text-yellow-600 flex items-center">
         Learn more <PiArrowRight className="ml-1 text-sm" />
@@ -118,8 +118,8 @@ const HeroSection = () => {
             mx-auto
             "
       >
-        Create Once, Identify Everywhere with
-        <span className="text-sky-500">IdentiFi</span>
+        Create Once, Identify Everywhere with{" "}
+        <span className="text-sky-500 font-bold">IdentiFi</span>
       </p>
 
       <div className="flex gap-4 pt-6 items-center justify-center">
@@ -265,21 +265,16 @@ const HeroSection = () => {
       {/* Display content based on the active tab */}
       <div className="hidden md:flex py-10 px-8 md:px-0    lg:w-3/4 2xl:w-[55%]">
         {activeTab && (
-          <div className=" md:flex  items-center justify-center space-x-6 hover:cursor-pointer w-full">
-            <Image
-              src={activeTab.image}
-              width={500}
-              height={500}
-              alt="logo"
-              className="
-                w-full
-                p-20
-                xl:p-40
-                shadow-md
-                rounded-xl
-                bg-[#f6f5f4]
-        "
-            />
+          <div
+            className=" 
+          p-20
+          xl:p-40
+          shadow-md
+          rounded-xl
+          bg-[#f6f5f4]  md:flex  items-center justify-center space-x-6 hover:cursor-pointer w-full"
+          >
+            <Image src={activeTab.image} width={200} height={200} alt="logo" />
+            <p>fdasfd</p>
           </div>
         )}
       </div>
