@@ -10,21 +10,22 @@ import GetStartedFree from "./eighth-section";
 import Footer from "@/components/footer";
 
 const LandingPage = () => {
-    return ( 
+  return (
     <div className="">
-        <Navbar />
-        <HeroSection />
-        <SecondSection />
-        <ThirdSection />
-        <FourthSection />
-        <FifthSection />
+      <Navbar />
+      <HeroSection />
+      <SeventhSection />
+      {/* <SecondSection /> */}
+      {/* <ThirdSection /> */}
+      {/* <FourthSection /> */}
+      {/* <FifthSection /> */}
 
-        <SixthSection />
-        <SeventhSection />
-        <GetStartedFree />
-        <Footer />
+      <SixthSection />
 
-    </div> );
-}
- 
+      {/* <GetStartedFree /> */}
+      <Footer />
+    </div>
+  );
+};
+
 export default LandingPage;
