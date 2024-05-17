@@ -24,7 +24,7 @@ const ActionButtons = () => {
       <div className=" items-center justify-center flex ">
         <div className="flex xl:space-x-4">
           <Link
-            href={"/contact-sales"}
+            href={"/onboard"}
             className="
             lg:flex
             items-center
