@@ -21,7 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import {
+  IconBrandInstagram,
+  IconBrandTiktok,
+  IconBrandX,
+  IconBrandYoutube,
+  IconBriefcase,
+  IconMail,
+  IconMapPin,
+  IconPhone,
+} from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -158,12 +167,80 @@ export default function ContactForm() {
           <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
           <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
           <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-            <p>hello world</p>
-            {/* <img
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-light.png"
-              className="dark:hidden w-[272px] h-[572px]"
-              alt=""
-            /> */}
+            <div className="flex flex-col items-center justify-center pt-4 mx-3">
+              <div className="text-center flex flex-col items-center justify-center">
+                <img
+                  className="w-20 h-20 object-cover p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  src="/images/avatar.jpeg"
+                  alt="Bordered avatar"
+                />
+                <p className="font-medium text-gray-700 py-2">@identiFiDID</p>
+                <p className="text-sm text-gray-700 py-1">
+                  cursus quam neque in cursus viverra orci, dapibus nec
+                  tristique...
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-2 py-2 w-full">
+                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                  <IconBriefcase width={17} height={17} />
+                  <p className="text-sm">Company </p>
+                </div>
+                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                  <IconMapPin width={17} height={17} />
+                  <p className="text-sm"> USA </p>
+                </div>
+              </div>
+              <div className=" flex flex-col w-full ">
+                <div className="flex flex-row items-center bg-gray-100  space-x-2  px-3 py-2 rounded-lg">
+                  <IconMail width={17} height={17} />
+                  <p className="text-sm">identiFi@gmail.com</p>
+                </div>
+                <div className="flex flex-row items-center bg-gray-100 mt-2 space-x-2 px-3 py-2 rounded-lg">
+                  <IconPhone width={17} height={17} />
+                  <p className="text-sm"> +00 123 456 789</p>
+                </div>
+              </div>
+              <div className="inline-flex items-center justify-center w-full">
+                <hr className="w-64 h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+                <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
+                  Skills
+                </span>
+              </div>{" "}
+              <div className="grid grid-cols-2 w-full ">
+                <div className="flex flex-row items-center bg-gray-100 w-max  space-x-2  px-3 py-2 rounded-lg">
+                  <p className="text-xs">UI/UX</p>
+                </div>
+                <div className="flex flex-row items-center bg-gray-100 w-max mt-2 space-x-2 px-3 py-2 rounded-lg">
+                  <p className="text-xs"> Soft Engineer</p>
+                </div>
+                <div className="flex flex-row items-center bg-gray-100 w-max mt-2 space-x-2 px-3 py-2 rounded-lg">
+                  <p className="text-xs"> Soft Engineer</p>
+                </div>
+                <div className="flex flex-row items-center bg-gray-100 w-max mt-2 space-x-2 px-3 py-2 rounded-lg">
+                  <p className="text-xs"> Soft Engineer</p>
+                </div>
+              </div>
+              <div className="inline-flex items-center justify-center w-full">
+                <hr className="w-64 h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+                <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
+                  Socials
+                </span>
+              </div>{" "}
+              <div className="grid grid-cols-4 pt-2 w-full ">
+                <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black   p-3  rounded-full">
+                  <IconBrandX width={24} height={24} color="white" />
+                </div>
+                <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black   p-3  rounded-full">
+                  <IconBrandInstagram width={24} height={24} color="white" />
+                </div>
+                <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black   p-3  rounded-full">
+                  <IconBrandYoutube width={24} height={24} color="white" />
+                </div>
+                <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black   p-3  rounded-full">
+                  <IconBrandTiktok width={24} height={24} color="white" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
