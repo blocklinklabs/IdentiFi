@@ -65,137 +65,23 @@ export function Menu() {
     <NavigationMenu className="hidden lg:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Product</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="flex">
-              <ul className="grid  p-2 md:w-[400px]  lg:w-[250px] hover:cursor-pointer border-r">
-                <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                  <PiBookOpenTextLight className="text-2xl mr-2 text-red-600" />
-                  <div className="">
-                    <a>Wikis</a>
-                    <p className="text-gray-400 text-sm font-light">
-                      Centralize your knowledge
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                  <PiTargetLight className="text-2xl mr-2 text-blue-600" />
-                  <div className="">
-                    <a>Projects</a>
-                    <p className="text-gray-400 text-sm font-light">
-                      For every team or size
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                  <PiFileThin className="text-2xl mr-2 text-yellow-600" />
-                  <div className="">
-                    <a>Docs</a>
-                    <p className="text-gray-400 text-sm font-light">
-                      Simple & Powerful
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                  <PiSparkleLight className="text-2xl mr-2 text-purple-600" />
-                  <div className="">
-                    <a>Bird Assistant</a>
-                    <p className="text-gray-400 text-sm font-light">
-                      Integrated AI Assistant
-                    </p>
-                  </div>
-                </div>
-              </ul>
-              <div>
-                <ul className="grid  p-2 md:w-[400px]  lg:w-[250px] hover:cursor-pointer border-r">
-                  <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                    <div>
-                      <a className="">Template gallery</a>
-                      <p className="text-gray-400 text-sm font-light">
-                        Setups to get you started
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                    <div>
-                      <a>Customer Stories</a>
-                      <p className="text-gray-400 text-sm font-light">
-                        See how teams use bird
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 hover:bg-gray-400/10 p-1 rounded-sm">
-                    <div>
-                      <a>Connections</a>
-                      <p className="text-gray-400 text-sm font-light">
-                        Connect your tools to bird
-                      </p>
-                    </div>
-                  </div>
-                </ul>
-              </div>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Download</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
+          <Link href="/pricing" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Home
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Pricing
+              Jobs
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/pricing" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Verify Identity
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -229,4 +115,3 @@ const ListItem = React.forwardRef<
   );
 });
 ListItem.displayName = "ListItem";
-

@@ -22,31 +22,34 @@ const ActionButtons = () => {
   return (
     <div className="pr-2">
       <div className=" items-center justify-center flex ">
-
-      <div className="flex xl:space-x-4">
-        <Link
-          href={"/contact-sales"}
-          className="
+        <div className="flex xl:space-x-4">
+          <Link
+            href={"/contact-sales"}
+            className="
             lg:flex
             items-center
             hidden
             
             "
-        >
-          <div className="">Request a demo</div>
-        </Link>
+          >
+            <div className="">Get DID</div>
+          </Link>
 
-        <div className="font-thin     
+          <div
+            className="font-thin     
         lg:flex
             items-center
-            hidden">|</div>
-      </div>
+            hidden"
+          >
+            |
+          </div>
+        </div>
 
-      <div className="flex lg:space-x-4 items-center pr-4">
-        <Link href={"/free"}>
-          <Button
-            variant={"outline"}
-            className="
+        <div className="flex lg:space-x-4 items-center pr-4">
+          <Link href={"/free"}>
+            <Button
+              variant={"outline"}
+              className="
             lg:flex
             items-center
             hidden
@@ -54,17 +57,14 @@ const ActionButtons = () => {
                 text-md
                 
                 "
-          >
-            Log in
-          </Button>
-        </Link>
-        <Link href={"/contact"}>
-          <Button
-          className="hidden lg:block"
-          
-          >Get Bird free</Button>
-        </Link>
-      </div>
+            >
+              Log in
+            </Button>
+          </Link>
+          <Link href={"/contact"}>
+            <Button className="hidden lg:block">Profile</Button>
+          </Link>
+        </div>
       </div>
 
       {isDropdownVisible && (
