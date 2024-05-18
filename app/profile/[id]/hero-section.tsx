@@ -122,6 +122,32 @@ const HeroSection = () => {
                 {"We making digital Identity easier..."}
               </p>
             </div>
+            <div className="flex flex-col w-full mt-2 ">
+              <div className=" pb-1 space-y-2">
+                <p className="text-md font-medium">Socials</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-5 gap-2 pt-1 w-full">
+              <div className="flex flex-row items-center justify-center bg-black px-3 py-2 rounded-lg cursor-pointer">
+                <IconBrandX width={24} height={24} color="white" />
+              </div>
+
+              <div className="flex flex-row items-center justify-center bg-[#5b51d8] px-3 py-2 rounded-lg cursor-pointer">
+                <IconBrandInstagram width={24} height={24} color="white" />
+              </div>
+
+              <div className="flex flex-row items-center justify-center bg-[#ff0000] px-3 py-2 rounded-lg cursor-pointer">
+                <IconBrandYoutube width={24} height={24} color="white" />
+              </div>
+
+              <div className="flex flex-row items-center justify-center bg-[#69c9d0] px-3 py-2 rounded-lg cursor-pointer">
+                <IconBrandTiktok width={24} height={24} color="white" />
+              </div>
+
+              <div className="flex flex-row items-center justify-center bg-[#2867b2] px-3 py-2 rounded-lg cursor-pointer">
+                <IconBrandLinkedin width={24} height={24} color="white" />
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-2 py-2 w-full">
               <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
                 <IconBriefcase width={17} height={17} />
@@ -216,32 +242,6 @@ const HeroSection = () => {
               {/* {formData.skills.map((skill: any) => (
                    
                   ))} */}
-            </div>
-            <div className="flex flex-col w-full mt-2 ">
-              <div className=" pb-2 space-y-2">
-                <p className="text-md font-medium">Skills</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-5 gap-2 pt-2 w-full">
-              <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                <IconBrandX width={24} height={24} color="white" />
-              </div>
-
-              <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                <IconBrandInstagram width={24} height={24} color="white" />
-              </div>
-
-              <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                <IconBrandYoutube width={24} height={24} color="white" />
-              </div>
-
-              <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                <IconBrandTiktok width={24} height={24} color="white" />
-              </div>
-
-              <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                <IconBrandLinkedin width={24} height={24} color="white" />
-              </div>
             </div>
           </div>
         </div>
