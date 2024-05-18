@@ -26,6 +26,7 @@ import {
   IconCake,
   IconClock,
   IconSchool,
+  IconStar,
   IconUser,
   IconZoomCheck,
 } from "@tabler/icons-react";
@@ -41,6 +42,7 @@ import {
   IconPhone,
 } from "@tabler/icons-react";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { WavyBackground } from "@/components/ui/wavy-background";
 const tabs = [
   {
     icon: (
@@ -108,10 +110,16 @@ const HeroSection = () => {
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
 
   return (
-    <div className="md:items-center flex flex-col ">
-      <BackgroundGradientAnimation className="md:items-center flex flex-col">
-        <div className="flex flex-row items-start w-6/12">
-          <div className="border-2 rounded-xl shadow-lg my-4 py-3 overflow-hidden w-full  bg-white dark:bg-gray-800">
+    <div className="md:items-center flex flex-col  ">
+      {/* <BackgroundGradientAnimation className="md:items-center flex flex-col"> */}
+      <div className="flex flex-col items-center">
+        <div className="id-card-tag"></div>
+        <div className="id-card-tag-strip"></div>
+        <div className="id-card-hook"></div>
+      </div>
+      <div className="md:items-center flex flex-col">
+        <div className="flex flex-row items-start w-7/12">
+          <div className="border-2 rounded-xl  shadow-lg mb-4 py-3 overflow-hidden w-full bg-gradient-to-tl from-slate-50 to-slate-100">
             <div className="flex flex-col items-center justify-center pt-4 mx-3">
               <div className="text-center flex flex-col items-center justify-center">
                 <img
@@ -119,34 +127,36 @@ const HeroSection = () => {
                   src={"/images/avatar.jpeg"}
                   alt="Bordered avatar"
                 />
-                <p className="font-medium text-gray-700 py-2">@identiFiDID</p>
+                <p className="font-bold text-lg text-gray-700 py-2">
+                  @identiFiDID
+                </p>
                 <p className="text-sm text-gray-700 py-1">
                   {"We making digital Identity easier..."}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-2 py-2 w-full">
-                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center space-x-2 bg-white px-3 py-2 rounded-lg">
                   <IconBriefcase width={17} height={17} />
                   <p className="text-sm">{"Company"} </p>
                 </div>
-                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center space-x-2 bg-white px-3 py-2 rounded-lg">
                   <IconMapPin width={17} height={17} />
                   <p className="text-sm">GH </p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 py-2 w-full">
-                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center space-x-2 bg-white px-3 py-2 rounded-lg">
                   <IconMail width={17} height={17} />
                   <p className="text-sm">{"identiFi@gmail.com"}</p>
                 </div>
-                <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center space-x-2 bg-white px-3 py-2 rounded-lg">
                   <IconPhone width={17} height={17} />
                   <p className="text-sm">{"+00 123 456 789"}</p>
                 </div>
               </div>
               <div className="flex flex-col w-full mt-2 ">
-                <div className=" bg-gray-50 rounded-lg p-3 space-y-2">
+                <div className=" bg-white rounded-lg p-3 space-y-2">
                   <div className="flex flex-row items-center space-x-2   rounded-lg">
                     <IconUser width={18} height={18} />
                     <p className="text-sm">General Information</p>
@@ -209,13 +219,13 @@ const HeroSection = () => {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 w-full ">
-                <div className="flex flex-row items-center bg-gray-100 w-max  space-x-2  px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center bg-white w-max  space-x-2  px-3 py-2 rounded-lg">
                   <p className="text-xs">UI/UX</p>
                 </div>
-                <div className="flex flex-row items-center bg-gray-100 w-max  space-x-2  px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center bg-white w-max  space-x-2  px-3 py-2 rounded-lg">
                   <p className="text-xs">Software Engineer</p>
                 </div>
-                <div className="flex flex-row items-center bg-gray-100 w-max  space-x-2  px-3 py-2 rounded-lg">
+                <div className="flex flex-row items-center bg-white w-max  space-x-2  px-3 py-2 rounded-lg">
                   <p className="text-xs">Machine Learning</p>
                 </div>
                 {/* {formData.skills.map((skill: any) => (
@@ -251,7 +261,8 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-      </BackgroundGradientAnimation>
+        {/* </BackgroundGradientAnimation> */}
+      </div>{" "}
     </div>
   );
 };

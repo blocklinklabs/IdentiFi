@@ -5,9 +5,9 @@ import Footer from "@/components/footer";
 const Profile = () => {
   return (
     <div className="">
-      {/* <Navbar /> */}
+      <Navbar />
       <HeroSection />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
