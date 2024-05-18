@@ -65,7 +65,7 @@ export function Menu() {
     <NavigationMenu className="hidden lg:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/pricing" legacyBehavior passHref>
+          <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Home
             </NavigationMenuLink>
@@ -79,7 +79,7 @@ export function Menu() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/pricing" legacyBehavior passHref>
+          <Link href="/verify-identity" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Verify Identity
             </NavigationMenuLink>
