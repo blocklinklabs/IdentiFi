@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePrivy } from "@privy-io/react-auth";
 
 import { Button } from "@/components/ui/button";
 
@@ -9,6 +10,9 @@ import Link from "next/link";
 import DropdownMenu from "./drop-down-menu";
 
 const ActionButtons = () => {
+  const { ready, authenticated, login } = usePrivy();
+  const disableLogin = !ready || (ready && authenticated);
+
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -61,9 +65,11 @@ const ActionButtons = () => {
               Log in
             </Button>
           </Link>
-          <Link href={"/contact"}>
-            <Button className="hidden lg:block">Profile</Button>
-          </Link>
+          {/* <Link href={"/contact"}> */}
+          <Button className="hidden lg:block" onClick={login}>
+            Profile
+          </Button>
+          {/* </Link> */}
         </div>
       </div>
 

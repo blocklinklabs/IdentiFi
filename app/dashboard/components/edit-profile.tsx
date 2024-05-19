@@ -1,19 +1,12 @@
 "use client";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Computer, ScreenShare, Share, Smile } from "lucide-react";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createUser } from "../../utils/queries";
-import {
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import {
   IconBrandInstagram,
   IconBrandLinkedin,
@@ -41,9 +34,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { PiCheckLight } from "react-icons/pi";
 import Select from "react-select";
-import makeAnimated, { Placeholder } from "react-select/animated";
-import { create } from "@web3-storage/w3up-client";
-import { getWeb3StorageClient } from "../lib/web3storage";
+import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
@@ -54,11 +45,8 @@ const FormSchema = z.object({
   email: z.string().email(),
   home_address: z.string(),
   date_of_birth: z.string().date(),
-  education: z.string(),
-  work_history: z.string(),
   phone_number: z.string(),
   job_title: z.string(),
-  imageUrl: z.string(),
   x: z
     .string()
     .url()
@@ -104,8 +92,7 @@ const FormSchema = z.object({
 });
 
 type FormValues = z.infer<typeof FormSchema>;
-
-export default function ContactForm() {
+function EditProfile() {
   const [countryCode, setCountryCode] = useState("");
 
   useEffect(() => {
@@ -133,8 +120,6 @@ export default function ContactForm() {
     email: "",
     home_address: "",
     date_of_birth: "",
-    education: "",
-    work_history: "",
     phone_number: "",
     job_title: "",
     x: "",
@@ -143,14 +128,12 @@ export default function ContactForm() {
     youtube: "",
     linkedin: "",
     info: "",
-    imageUrl: "",
     skills: [
       { value: "UI/UX" },
       { value: "DevOps" },
       { value: "FrontEnd Dev" },
     ],
   });
-
   const [validUrls, setValidUrls] = useState({
     x: false,
     instagram: false,
@@ -161,83 +144,36 @@ export default function ContactForm() {
 
   const [errors, setErrors] = useState({}) as any;
 
-  //web3storage
-
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: formData,
   });
 
-  async function onSubmit(e: any) {
-    e.preventDefault();
-    // e.preventDefault();
-    // setLoading(true);
-    // try {
-    //   const basicInfo = {
-    //     firstName: formData.first_name,
-    //     lastName: formData.last_name,
-    //     email: formData.email,
-    //     homeAddress: formData.home_address,
-    //     dateOfBirth: formData.date_of_birth,
-    //     phoneNumber: formData.phone_number,
-    //   };
+  async function onSubmit(data: FormValues) {
+    try {
+      // setLoading(true);
+      console.log(data);
 
-    //   const professionalInfo = {
-    //     education: formData.education,
-    //     workHistory: formData.work_history,
-    //     jobTitle: formData.job_title,
-    //     info: formData.info,
-    //     skills: formData.skills,
-    //     imageURL: imageUrls[0],
-    //   };
+      // const res = await fetch("/api/contact", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data),
+      // });
 
-    //   const socialLinks = {
-    //     x: formData.x || "",
-    //     instagram: formData.instagram || "",
-    //     tiktok: formData.tiktok || "",
-    //     youtube: formData.youtube || "",
-    //     linkedin: formData.linkedin || "",
-    //   };
+      // if (!res.ok) {
+      //   throw new Error("Something went wrong");
+      // }
 
-    //   const visibility = {
-    //     education: true,
-    //     workHistory: true,
-    //     phoneNumber: true,
-    //     homeAddress: true,
-    //     dateOfBirth: true,
-    //   };
-
-    //   if (
-    //     !formData.username ||
-    //     !basicInfo.firstName ||
-    //     !basicInfo.lastName ||
-    //     !basicInfo.email
-    //   ) {
-    //     throw new Error("Required fields are missing.");
-    //   }
-
-    //   const receipt = await createUser(
-    //     formData.username,
-    //     basicInfo,
-    //     professionalInfo,
-    //     socialLinks,
-    //     visibility
-    //   );
-    //   console.log("User created:", receipt);
-    //   toast({
-    //     title: "Success",
-    //     description: "User created successfully",
-    //   });
-    // } catch (error: any) {
-    //   toast({
-    //     title: "Error",
-    //     description: error.message || "Something went wrong",
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
+      // setSubmitted(true);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
-
   const validateUrl = (url: any, pattern: any) => {
     if (!url) return false;
     const regex = new RegExp(pattern);
@@ -380,69 +316,15 @@ export default function ContactForm() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [imageUrls, setImageUrls] = useState("/images/avatar.jpeg");
 
-  const handleImagesChange = async (files: any) => {
-    const file = files[0]; // Only handling one image
-    try {
-      const form = new FormData();
-      form.append("file", file);
-      form.append("pinataMetadata", JSON.stringify({ name: file.name }));
-      form.append("pinataOptions", JSON.stringify({ cidVersion: 1 }));
-
-      const options = {
-        method: "POST",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkMWJjNzRiNy00YWUzLTQ0ZmUtYjU1NS0wNGVkOTRlMTY1NzAiLCJlbWFpbCI6Im1lbmRzYWxiZXJ0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJiOWI4NzA2ZTQ4MDMwYzE1MzRhZCIsInNjb3BlZEtleVNlY3JldCI6ImM5N2M4ODgyZDFiZDg1MDY5ZmU3M2Q0YmRkODhmMWZiMzFiYzU0YTQ2NjJkMGQ1Njk5Mjg4NzAxYjUxZThkMjAiLCJpYXQiOjE3MTYwNzQ3Mzd9.uL0vggNCb0Y0Zz42yQiZ4fBwG3kDAlGotZ2TgsMvyLc",
-        },
-        body: form,
-      };
-
-      const response = await fetch(
-        "https://api.pinata.cloud/pinning/pinFileToIPFS",
-        options
-      );
-      console.log(formData);
-
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      const fileUrl = `https://gateway.pinata.cloud/ipfs/${responseData.IpfsHash}`;
-      console.log(fileUrl);
-
-      // Set the image URL in the form data
-      setFormData((prev) => ({ ...prev, imageUrl: fileUrl }));
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+  const handleImagesChange = (urls: any) => {
+    setImageUrls(urls);
   };
-
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-        overflow: "hidden",
-      }}
-      className="md:flex relative  justify-center pt-20 pb-20 px-16"
-    >
+    <>
       <div className="">
-        <div className="text-5xl font-medium w-2/3">
-          Creating a DID is a breeze with{" "}
-          <span className="text-sky-500">identiFi</span>
-        </div>
-        <div
-          className="
-              
-              py-4
-              text-gray-500
-                    "
-        >
-          Let&apos;s talk about how Bird can help your team work better.
-        </div>
+        <div className="text-5xl font-medium w-2/3"></div>
 
-        <div className="flex flex-row items-start">
+        <div className="flex mr-10 flex-row items-start">
           <div className="relative  border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
             <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
             <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
@@ -453,7 +335,7 @@ export default function ContactForm() {
                 <div className="text-center flex flex-col items-center justify-center">
                   <img
                     className="w-20 h-20 object-cover object-center p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                    src={formData.imageUrl || "/images/avatar.jpeg"}
+                    src={imageUrls}
                     alt="Bordered avatar"
                   />
                   <p className="font-medium text-gray-700 py-2">
@@ -550,13 +432,15 @@ export default function ContactForm() {
 
       <Form {...form}>
         {!submitted ? (
-          <form onSubmit={onSubmit} className="space-y-4 w-5/6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 w-5/6"
+          >
             <div className="md:flex items-center gap-6 ">
               <FormItem className="items-center justify-center  w-full">
                 <FormLabel className="text-sm ">First name *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Satoshi"
                     onChange={(e) => handleChange("first_name", e.target.value)}
                     value={formData.first_name}
                   />
@@ -567,7 +451,6 @@ export default function ContactForm() {
                 <FormLabel className="w-60 text-sm ">Last name *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="nakamoto"
                     onChange={(e) => handleChange("last_name", e.target.value)}
                     value={formData.last_name}
                   />
@@ -579,7 +462,6 @@ export default function ContactForm() {
               <FormLabel className="w-60 text-sm">username *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="satoshinakamoto"
                   onChange={(e) => handleChange("username", e.target.value)}
                   value={formData.username}
                 />
@@ -591,7 +473,6 @@ export default function ContactForm() {
                 <FormLabel className="text-sm ">Home Address *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="18670 Coastal Highway"
                     onChange={(e) =>
                       handleChange("home_address", e.target.value)
                     }
@@ -614,38 +495,10 @@ export default function ContactForm() {
               </FormItem>
             </div>
 
-            <div className="md:flex items-center gap-6 ">
-              <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="text-sm ">Education *</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Havard"
-                    onChange={(e) => handleChange("education", e.target.value)}
-                    value={formData.education}
-                  />
-                </FormControl>
-              </FormItem>
-
-              <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="w-60 text-sm ">Work History*</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Apple,google,amazon"
-                    onChange={(e) =>
-                      handleChange("work_history", e.target.value)
-                    }
-                    value={formData.work_history}
-                  />
-                </FormControl>
-              </FormItem>
-            </div>
-
             <FormItem className="items-center justify-center  w-full">
               <FormLabel className=" text-sm   ">Email *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="sotashinakamoto@gmail.com"
                   onChange={(e) => handleChange("email", e.target.value)}
                   value={formData.email}
                 />
@@ -656,7 +509,6 @@ export default function ContactForm() {
               <FormLabel className=" text-sm   ">Phone number *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="+123456789-0"
                   onChange={(e) => handleChange("phone_number", e.target.value)}
                   value={formData.phone_number}
                 />
@@ -667,7 +519,6 @@ export default function ContactForm() {
               <FormLabel className=" text-sm   ">Job Title*</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Designer"
                   onChange={(e) => handleChange("job_title", e.target.value)}
                   value={formData.job_title}
                 />
@@ -701,7 +552,6 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://x.com/johndoe"
                   onChange={(e) => handleChange("x", e.target.value)}
                   value={formData.x}
                 />
@@ -719,7 +569,6 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://www.instagram.com/johndoe"
                   onChange={(e) => handleChange("instagram", e.target.value)}
                   value={formData.instagram}
                 />
@@ -735,7 +584,6 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://www.tiktok.com/@johndoe"
                   onChange={(e) => handleChange("tiktok", e.target.value)}
                   value={formData.tiktok}
                 />
@@ -751,8 +599,6 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://www.youtube.com/user/johndoe
-                "
                   onChange={(e) => handleChange("youtube", e.target.value)}
                   value={formData.youtube}
                 />
@@ -770,7 +616,6 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://www.linkedin.com/in/johndoe"
                   onChange={(e) => handleChange("linkedin", e.target.value)}
                   value={formData.linkedin}
                 />
@@ -847,6 +692,8 @@ export default function ContactForm() {
           </>
         )}
       </Form>
-    </div>
+    </>
   );
 }
+
+export default EditProfile;

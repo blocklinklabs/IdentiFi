@@ -15,7 +15,7 @@ const CustomImageUploader = ({ onImagesChange }) => {
       setImages((prevImages) => {
         const updatedImages = [...prevImages, ...newImages];
         if (onImagesChange) {
-          onImagesChange(updatedImages.map((img) => img.preview));
+          onImagesChange(updatedImages);
         }
         return updatedImages;
       });
@@ -27,7 +27,7 @@ const CustomImageUploader = ({ onImagesChange }) => {
     setImages((prevImages) => {
       const updatedImages = prevImages.filter((image) => image !== file);
       if (onImagesChange) {
-        onImagesChange(updatedImages.map((img) => img.preview));
+        onImagesChange(updatedImages);
       }
       return updatedImages;
     });
@@ -60,7 +60,7 @@ const CustomImageUploader = ({ onImagesChange }) => {
             <div className="flex flex-col space-y-3 items-center justify-center">
               <IconPhotoUp width={32} height={32} />
               <p>
-                Drag 'n' drop profile pitcure here, or click to select image
+                Drag 'n' drop profile picture here, or click to select image
               </p>
             </div>
             <div className="mt-4 flex flex-row items-center justify-center gap-4">
