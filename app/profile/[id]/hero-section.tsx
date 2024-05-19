@@ -131,6 +131,8 @@ const HeroSection = (params: any) => {
     const getUserInfo = async () => {
       try {
         let userInfo = (await getUserByUsername(params.param)) as any;
+        console.log(userInfo);
+
         setFormData({
           first_name: userInfo.basicInfo.firstName,
           last_name: userInfo.basicInfo.lastName,
@@ -254,7 +256,7 @@ const HeroSection = (params: any) => {
                         <p className="text-sm">Work History</p>
                       </div>
                       <p className="text-xs font-semibold ">
-                        {formData.workHistory || "Twitch, Google, Apple"}
+                        {formData.work_history || "Twitch, Google, Apple"}
                       </p>
                     </div>
                     <div className="py-2">
@@ -263,7 +265,7 @@ const HeroSection = (params: any) => {
                         <p className="text-sm">Join Date</p>
                       </div>
                       <p className="text-xs font-semibold ">
-                        {formData.dateOfBirth || " 12-09-2021"}
+                        {formData.dateOfBirth || " 2024"}
                       </p>
                     </div>
 
@@ -273,7 +275,7 @@ const HeroSection = (params: any) => {
                         <p className="text-sm">Birthday</p>
                       </div>
                       <p className="text-xs font-semibold ">
-                        {formData.dateOfBirth || " 15-08-1990"}
+                        {formData.date_of_birth || " 15-08-1990"}
                       </p>
                     </div>
                   </div>

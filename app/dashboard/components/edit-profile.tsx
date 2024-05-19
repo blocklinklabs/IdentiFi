@@ -587,263 +587,278 @@ export default function EditProile() {
         </div>
       </div>
 
-      <Form {...form} className="w-full md:w-2/3">
-        {!submitted ? (
-          <form onSubmit={onSubmit} className="space-y-4 w-full">
-            <div className="md:flex items-center gap-6 ">
+      <Form {...form}>
+        <div className="w-full md:w-2/3">
+          {!submitted ? (
+            <form onSubmit={onSubmit} className="space-y-4 w-full">
+              <div className="md:flex items-center gap-6 ">
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="text-sm ">First name *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Satoshi"
+                      onChange={(e) =>
+                        handleChange("first_name", e.target.value)
+                      }
+                      value={formData.first_name}
+                    />
+                  </FormControl>
+                </FormItem>
+
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="w-60 text-sm ">Last name *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="nakamoto"
+                      onChange={(e) =>
+                        handleChange("last_name", e.target.value)
+                      }
+                      value={formData.last_name}
+                    />
+                  </FormControl>
+                </FormItem>
+              </div>
+
               <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="text-sm ">First name *</FormLabel>
+                <FormLabel className="w-60 text-sm">username *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Satoshi"
-                    onChange={(e) => handleChange("first_name", e.target.value)}
-                    value={formData.first_name}
+                    placeholder="satoshinakamoto"
+                    onChange={(e) => handleChange("username", e.target.value)}
+                    value={formData.username}
+                  />
+                </FormControl>
+              </FormItem>
+
+              <div className="md:flex items-center gap-6 ">
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="text-sm ">Home Address *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="18670 Coastal Highway"
+                      onChange={(e) =>
+                        handleChange("home_address", e.target.value)
+                      }
+                      value={formData.home_address}
+                    />
+                  </FormControl>
+                </FormItem>
+
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="w-60 text-sm ">
+                    Date of Birth*
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      onChange={(e) =>
+                        handleChange("date_of_birth", e.target.value)
+                      }
+                      value={formData.date_of_birth}
+                    />
+                  </FormControl>
+                </FormItem>
+              </div>
+
+              <div className="md:flex items-center gap-6 ">
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="text-sm ">Education *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Havard"
+                      onChange={(e) =>
+                        handleChange("education", e.target.value)
+                      }
+                      value={formData.education}
+                    />
+                  </FormControl>
+                </FormItem>
+
+                <FormItem className="items-center justify-center  w-full">
+                  <FormLabel className="w-60 text-sm ">Work History*</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Apple,google,amazon"
+                      onChange={(e) =>
+                        handleChange("work_history", e.target.value)
+                      }
+                      value={formData.work_history}
+                    />
+                  </FormControl>
+                </FormItem>
+              </div>
+
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className=" text-sm   ">Email *</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="sotashinakamoto@gmail.com"
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    value={formData.email}
                   />
                 </FormControl>
               </FormItem>
 
               <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="w-60 text-sm ">Last name *</FormLabel>
+                <FormLabel className=" text-sm   ">Phone number *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="nakamoto"
-                    onChange={(e) => handleChange("last_name", e.target.value)}
-                    value={formData.last_name}
-                  />
-                </FormControl>
-              </FormItem>
-            </div>
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className="w-60 text-sm">username *</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="satoshinakamoto"
-                  onChange={(e) => handleChange("username", e.target.value)}
-                  value={formData.username}
-                />
-              </FormControl>
-            </FormItem>
-
-            <div className="md:flex items-center gap-6 ">
-              <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="text-sm ">Home Address *</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="18670 Coastal Highway"
+                    placeholder="+123456789-0"
                     onChange={(e) =>
-                      handleChange("home_address", e.target.value)
+                      handleChange("phone_number", e.target.value)
                     }
-                    value={formData.home_address}
+                    value={formData.phone_number}
                   />
                 </FormControl>
               </FormItem>
 
               <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="w-60 text-sm ">Date of Birth*</FormLabel>
+                <FormLabel className=" text-sm   ">Job Title*</FormLabel>
                 <FormControl>
                   <Input
-                    type="date"
-                    onChange={(e) =>
-                      handleChange("date_of_birth", e.target.value)
-                    }
-                    value={formData.date_of_birth}
+                    placeholder="Designer"
+                    onChange={(e) => handleChange("job_title", e.target.value)}
+                    value={formData.job_title}
                   />
                 </FormControl>
               </FormItem>
-            </div>
 
-            <div className="md:flex items-center gap-6 ">
+              <FormItem className="items-center justify-center  mb-4  w-full">
+                <FormLabel className=" text-sm   ">Select Skills *</FormLabel>
+                <FormControl>
+                  <Select
+                    components={animatedComponents}
+                    isMulti
+                    value={selectedOptions}
+                    onChange={handleSkillChange}
+                    options={options}
+                    className="text-md"
+                    styles={customStyles}
+                    classNamePrefix="react-select"
+                  />
+                </FormControl>
+              </FormItem>
+
+              <CustomImageUploader onImagesChange={handleImagesChange} />
+
               <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="text-sm ">Education *</FormLabel>
+                <FormLabel className=" text-sm   ">
+                  {errors?.x && (
+                    <p className="text-red-500 text-xs mt-1">{errors?.x}</p>
+                  )}
+                  X (Formerly Twitter)
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Havard"
-                    onChange={(e) => handleChange("education", e.target.value)}
-                    value={formData.education}
+                    placeholder="https://x.com/johndoe"
+                    onChange={(e) => handleChange("x", e.target.value)}
+                    value={formData.x}
                   />
                 </FormControl>
               </FormItem>
 
               <FormItem className="items-center justify-center  w-full">
-                <FormLabel className="w-60 text-sm ">Work History*</FormLabel>
+                <FormLabel className=" text-sm   ">
+                  {errors?.instagram && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors?.instagram}
+                    </p>
+                  )}
+                  Instagram
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type="text"
-                    placeholder="Apple,google,amazon"
-                    onChange={(e) =>
-                      handleChange("work_history", e.target.value)
-                    }
-                    value={formData.work_history}
+                    placeholder="https://www.instagram.com/johndoe"
+                    onChange={(e) => handleChange("instagram", e.target.value)}
+                    value={formData.instagram}
                   />
                 </FormControl>
               </FormItem>
-            </div>
 
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">Email *</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="sotashinakamoto@gmail.com"
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  value={formData.email}
-                />
-              </FormControl>
-            </FormItem>
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className=" text-sm   ">
+                  {errors?.tiktok && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors?.tiktok}
+                    </p>
+                  )}
+                  Tiktok
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://www.tiktok.com/@johndoe"
+                    onChange={(e) => handleChange("tiktok", e.target.value)}
+                    value={formData.tiktok}
+                  />
+                </FormControl>
+              </FormItem>
 
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">Phone number *</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="+123456789-0"
-                  onChange={(e) => handleChange("phone_number", e.target.value)}
-                  value={formData.phone_number}
-                />
-              </FormControl>
-            </FormItem>
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className=" text-sm   ">
+                  {errors?.youtube && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors?.youtube}
+                    </p>
+                  )}
+                  Youtube
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://www.youtube.com/user/johndoe"
+                    onChange={(e) => handleChange("youtube", e.target.value)}
+                    value={formData.youtube}
+                  />
+                </FormControl>
+              </FormItem>
 
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">Job Title*</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Designer"
-                  onChange={(e) => handleChange("job_title", e.target.value)}
-                  value={formData.job_title}
-                />
-              </FormControl>
-            </FormItem>
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className=" text-sm   ">
+                  {errors?.linkedin && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors?.linkedin}
+                    </p>
+                  )}
+                  LinkedIn
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="https://www.linkedin.com/in/johndoe"
+                    onChange={(e) => handleChange("linkedin", e.target.value)}
+                    value={formData.linkedin}
+                  />
+                </FormControl>
+              </FormItem>
 
-            <FormItem className="items-center justify-center  mb-4  w-full">
-              <FormLabel className=" text-sm   ">Select Skills *</FormLabel>
-              <FormControl>
-                <Select
-                  components={animatedComponents}
-                  isMulti
-                  value={selectedOptions}
-                  onChange={handleSkillChange}
-                  options={options}
-                  className="text-md"
-                  styles={customStyles}
-                  classNamePrefix="react-select"
-                />
-              </FormControl>
-            </FormItem>
+              <FormItem className="items-center justify-center w-full">
+                <FormLabel className="w-60 text-sm   ">About you?</FormLabel>
+                <FormControl>
+                  <Textarea
+                    style={{ height: "100px" }}
+                    onChange={(e) => handleChange("info", e.target.value)}
+                    value={formData.info}
+                  />
+                </FormControl>
+              </FormItem>
 
-            <CustomImageUploader onImagesChange={handleImagesChange} />
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">
-                {errors?.x && (
-                  <p className="text-red-500 text-xs mt-1">{errors?.x}</p>
-                )}
-                X (Formerly Twitter)
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://x.com/johndoe"
-                  onChange={(e) => handleChange("x", e.target.value)}
-                  value={formData.x}
-                />
-              </FormControl>
-            </FormItem>
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">
-                {errors?.instagram && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors?.instagram}
-                  </p>
-                )}
-                Instagram
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://www.instagram.com/johndoe"
-                  onChange={(e) => handleChange("instagram", e.target.value)}
-                  value={formData.instagram}
-                />
-              </FormControl>
-            </FormItem>
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">
-                {errors?.tiktok && (
-                  <p className="text-red-500 text-xs mt-1">{errors?.tiktok}</p>
-                )}
-                Tiktok
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://www.tiktok.com/@johndoe"
-                  onChange={(e) => handleChange("tiktok", e.target.value)}
-                  value={formData.tiktok}
-                />
-              </FormControl>
-            </FormItem>
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">
-                {errors?.youtube && (
-                  <p className="text-red-500 text-xs mt-1">{errors?.youtube}</p>
-                )}
-                Youtube
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://www.youtube.com/user/johndoe"
-                  onChange={(e) => handleChange("youtube", e.target.value)}
-                  value={formData.youtube}
-                />
-              </FormControl>
-            </FormItem>
-
-            <FormItem className="items-center justify-center  w-full">
-              <FormLabel className=" text-sm   ">
-                {errors?.linkedin && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors?.linkedin}
-                  </p>
-                )}
-                LinkedIn
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://www.linkedin.com/in/johndoe"
-                  onChange={(e) => handleChange("linkedin", e.target.value)}
-                  value={formData.linkedin}
-                />
-              </FormControl>
-            </FormItem>
-
-            <FormItem className="items-center justify-center w-full">
-              <FormLabel className="w-60 text-sm   ">About you?</FormLabel>
-              <FormControl>
-                <Textarea
-                  style={{ height: "100px" }}
-                  onChange={(e) => handleChange("info", e.target.value)}
-                  value={formData.info}
-                />
-              </FormControl>
-            </FormItem>
-
-            <div className="flex items-center gap-4">
-              <Button
-                type="submit"
-                className="
+              <div className="flex items-center gap-4">
+                <Button
+                  type="submit"
+                  className="
                             text-sm
                             font-light
                         
                             "
-                disabled={loading}
-              >
-                Submit
-              </Button>
-            </div>
-          </form>
-        ) : (
-          <>
-            <div
-              className="
+                  disabled={loading}
+                >
+                  Submit
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <div
+                className="
         text-xl 
         md:text-2xl 
         flex 
@@ -856,24 +871,25 @@ export default function EditProile() {
         px-8
 
         "
-            >
-              <div className="w-80">
-                <Image
-                  src="/assets/MeditatingDoodle.svg"
-                  alt="logo"
-                  width={1000}
-                  height={1000}
-                  className="mx-auto"
-                />
+              >
+                <div className="w-80">
+                  <Image
+                    src="/assets/MeditatingDoodle.svg"
+                    alt="logo"
+                    width={1000}
+                    height={1000}
+                    className="mx-auto"
+                  />
 
-                <div className="text-gray-500 font-light  text-center justify-center mx-auto py-10">
-                  We&apos;ve received your inquiry and will be contacting you
-                  via email shortly.
+                  <div className="text-gray-500 font-light  text-center justify-center mx-auto py-10">
+                    We&apos;ve received your inquiry and will be contacting you
+                    via email shortly.
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </Form>
     </div>
   );
