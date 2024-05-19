@@ -51,6 +51,7 @@ import {
 import { userInfo } from "os";
 import { useWallets } from "@privy-io/react-auth";
 import Link from "next/link";
+import { Toaster } from "@/components/ui/toaster";
 
 const animatedComponents = makeAnimated();
 
@@ -466,6 +467,7 @@ export default function EditProile() {
         <div className="text-3xl text-center font-medium py-3 ">
           Edit Profile
         </div>
+        <Toaster />
         <div className="flex justify-center md:justify-start">
           <div className="relative border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
             <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-s-lg"></div>
