@@ -175,6 +175,10 @@ contract IdentiFi {
         return getUserByUsername(username);
     }
 
+    function getUsernameByAddress(address userAddress) public view returns (string memory) {
+        return addressToUsername[userAddress];
+    }
+
     function addJob(string memory username, uint jobId) public {
         require(users[username].exists, "User does not exist.");
         users[username].appliedJobs.push(jobId);

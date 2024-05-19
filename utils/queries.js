@@ -7,6 +7,17 @@ function parseErrorMsg(e) {
   return json?.reason || json?.error?.message;
 }
 
+export async function getUsernameByAddress(userAddress) {
+  try {
+    const contractObj = await contract();
+    const username = await contractObj.getUsernameByAddress(userAddress);
+    return username;
+  } catch (e) {
+    console.error("Error in getUsernameByAddress:", e);
+    return parseErrorMsg(e);
+  }
+}
+
 // Function to create a new user
 export async function createUser(
   username,

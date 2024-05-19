@@ -1,12 +1,18 @@
 "use client";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { Computer, ScreenShare, Share, Smile } from "lucide-react";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   IconBrandInstagram,
   IconBrandLinkedin,
@@ -34,7 +40,15 @@ import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { PiCheckLight } from "react-icons/pi";
 import Select from "react-select";
-import makeAnimated from "react-select/animated";
+import makeAnimated, { Placeholder } from "react-select/animated";
+import {
+  getUserByAddress,
+  getUserByUsername,
+  createUser,
+  getUsernameByAddress,
+} from "@/utils/queries";
+import { userInfo } from "os";
+import { useWallets } from "@privy-io/react-auth";
 
 const animatedComponents = makeAnimated();
 
@@ -45,8 +59,11 @@ const FormSchema = z.object({
   email: z.string().email(),
   home_address: z.string(),
   date_of_birth: z.string().date(),
+  education: z.string(),
+  work_history: z.string(),
   phone_number: z.string(),
   job_title: z.string(),
+  imageUrl: z.string(),
   x: z
     .string()
     .url()
@@ -92,8 +109,10 @@ const FormSchema = z.object({
 });
 
 type FormValues = z.infer<typeof FormSchema>;
-function EditProfile() {
+
+export default function EditProile() {
   const [countryCode, setCountryCode] = useState("");
+  const { ready, wallets } = useWallets();
 
   useEffect(() => {
     const fetchCountryCode = async () => {
@@ -120,6 +139,8 @@ function EditProfile() {
     email: "",
     home_address: "",
     date_of_birth: "",
+    education: "",
+    work_history: "",
     phone_number: "",
     job_title: "",
     x: "",
@@ -128,12 +149,44 @@ function EditProfile() {
     youtube: "",
     linkedin: "",
     info: "",
+    imageUrl: "",
     skills: [
       { value: "UI/UX" },
       { value: "DevOps" },
       { value: "FrontEnd Dev" },
     ],
   });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      let userInfo = (await getUserByAddress(wallets[0].address)) as any;
+      let username = (await getUsernameByAddress(wallets[0].address)) as any;
+      setFormData({
+        first_name: userInfo.firstName,
+        last_name: userInfo.lastName,
+        username: username,
+        email: userInfo.email,
+        home_address: userInfo.homeAddress,
+        date_of_birth: userInfo.dateOfBirth,
+        education: userInfo.education,
+        work_history: userInfo.workHistory,
+        phone_number: userInfo.phoneNumber,
+        job_title: userInfo.jobTitle,
+        x: userInfo.x,
+        instagram: userInfo.instagram,
+        tiktok: userInfo.tiktok,
+        youtube: userInfo.youtube,
+        linkedin: userInfo.linkedin,
+        info: userInfo.info,
+        skills: [],
+        imageUrl: userInfo.imageURL,
+      });
+      console.log(userInfo);
+      console.log(username);
+    };
+    getUserInfo();
+  }, []);
+
   const [validUrls, setValidUrls] = useState({
     x: false,
     instagram: false,
@@ -144,36 +197,102 @@ function EditProfile() {
 
   const [errors, setErrors] = useState({}) as any;
 
+  //web3storage
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: formData,
   });
 
-  async function onSubmit(data: FormValues) {
+  async function onSubmit(e: any) {
+    e.preventDefault();
+    setLoading(true);
     try {
-      // setLoading(true);
-      console.log(data);
+      const basicInfo = {
+        firstName: formData.first_name,
+        lastName: formData.last_name,
+        email: formData.email,
+        homeAddress: formData.home_address,
+        dateOfBirth: formData.date_of_birth,
+        phoneNumber: formData.phone_number,
+      };
 
-      // const res = await fetch("/api/contact", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(data),
-      // });
+      const professionalInfo = {
+        education: formData.education,
+        workHistory: formData.work_history,
+        jobTitle: formData.job_title,
+        info: formData.info,
+        skills: formData.skills,
+        imageURL: imageUrls[0],
+      };
 
-      // if (!res.ok) {
-      //   throw new Error("Something went wrong");
-      // }
+      const socialLinks = {
+        x: formData.x || "",
+        instagram: formData.instagram || "",
+        tiktok: formData.tiktok || "",
+        youtube: formData.youtube || "",
+        linkedin: formData.linkedin || "",
+      };
 
-      // setSubmitted(true);
-    } catch (error) {
+      const visibility = {
+        education: true,
+        workHistory: true,
+        phoneNumber: true,
+        homeAddress: true,
+        dateOfBirth: true,
+      };
+
+      if (
+        !formData.username ||
+        !basicInfo.firstName ||
+        !basicInfo.lastName ||
+        !basicInfo.email
+      ) {
+        throw new Error("Required fields are missing.");
+      }
+
+      const receipt = await createUser(
+        formData.username,
+        basicInfo,
+        professionalInfo,
+        socialLinks,
+        visibility
+      );
+      console.log("User created:", receipt);
+      toast({
+        title: "Success",
+        description: "User created successfully",
+      });
+      setFormData({
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+        home_address: "",
+        date_of_birth: "",
+        education: "",
+        work_history: "",
+        phone_number: "",
+        job_title: "",
+        x: "",
+        instagram: "",
+        tiktok: "",
+        youtube: "",
+        linkedin: "",
+        info: "",
+        skills: [],
+        imageUrl: "",
+      });
+    } catch (error: any) {
       toast({
         title: "Error",
-        description: "Something went wrong",
+        description: error.message || "Something went wrong",
       });
     } finally {
       setLoading(false);
     }
   }
+
   const validateUrl = (url: any, pattern: any) => {
     if (!url) return false;
     const regex = new RegExp(pattern);
@@ -316,15 +435,59 @@ function EditProfile() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [imageUrls, setImageUrls] = useState("/images/avatar.jpeg");
 
-  const handleImagesChange = (urls: any) => {
-    setImageUrls(urls);
-  };
-  return (
-    <>
-      <div className="">
-        <div className="text-5xl font-medium w-2/3"></div>
+  const handleImagesChange = async (files: any) => {
+    const file = files[0]; // Only handling one image
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("pinataMetadata", JSON.stringify({ name: file.name }));
+      form.append("pinataOptions", JSON.stringify({ cidVersion: 1 }));
 
-        <div className="flex mr-10 flex-row items-start">
+      const options = {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJkMWJjNzRiNy00YWUzLTQ0ZmUtYjU1NS0wNGVkOTRlMTY1NzAiLCJlbWFpbCI6Im1lbmRzYWxiZXJ0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJiOWI4NzA2ZTQ4MDMwYzE1MzRhZCIsInNjb3BlZEtleVNlY3JldCI6ImM5N2M4ODgyZDFiZDg1MDY5ZmU3M2Q0YmRkODhmMWZiMzFiYzU0YTQ2NjJkMGQ1Njk5Mjg4NzAxYjUxZThkMjAiLCJpYXQiOjE3MTYwNzQ3Mzd9.uL0vggNCb0Y0Zz42yQiZ4fBwG3kDAlGotZ2TgsMvyLc",
+        },
+        body: form,
+      };
+
+      const response = await fetch(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        options
+      );
+      console.log(formData);
+
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
+      const fileUrl = `https://gateway.pinata.cloud/ipfs/${responseData.IpfsHash}`;
+      console.log(fileUrl);
+
+      // Set the image URL in the form data
+      setFormData((prev) => ({ ...prev, imageUrl: fileUrl }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        position: "relative",
+        overflow: "hidden",
+      }}
+      className="md:flex relative  justify-center pt-20 pb-20 px-16"
+    >
+      <div className="">
+        <div className="text-3xl text-center font-medium py-3 ">
+          Edit Profile
+        </div>
+
+        <div className="flex flex-row items-start mr-8">
           <div className="relative  border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
             <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
             <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
@@ -335,7 +498,7 @@ function EditProfile() {
                 <div className="text-center flex flex-col items-center justify-center">
                   <img
                     className="w-20 h-20 object-cover object-center p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                    src={imageUrls}
+                    src={formData.imageUrl || "/images/avatar.jpeg"}
                     alt="Bordered avatar"
                   />
                   <p className="font-medium text-gray-700 py-2">
@@ -432,15 +595,13 @@ function EditProfile() {
 
       <Form {...form}>
         {!submitted ? (
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 w-5/6"
-          >
+          <form onSubmit={onSubmit} className="space-y-4 w-5/6">
             <div className="md:flex items-center gap-6 ">
               <FormItem className="items-center justify-center  w-full">
                 <FormLabel className="text-sm ">First name *</FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="Satoshi"
                     onChange={(e) => handleChange("first_name", e.target.value)}
                     value={formData.first_name}
                   />
@@ -451,6 +612,7 @@ function EditProfile() {
                 <FormLabel className="w-60 text-sm ">Last name *</FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="nakamoto"
                     onChange={(e) => handleChange("last_name", e.target.value)}
                     value={formData.last_name}
                   />
@@ -462,6 +624,7 @@ function EditProfile() {
               <FormLabel className="w-60 text-sm">username *</FormLabel>
               <FormControl>
                 <Input
+                  placeholder="satoshinakamoto"
                   onChange={(e) => handleChange("username", e.target.value)}
                   value={formData.username}
                 />
@@ -473,6 +636,7 @@ function EditProfile() {
                 <FormLabel className="text-sm ">Home Address *</FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="18670 Coastal Highway"
                     onChange={(e) =>
                       handleChange("home_address", e.target.value)
                     }
@@ -495,10 +659,38 @@ function EditProfile() {
               </FormItem>
             </div>
 
+            <div className="md:flex items-center gap-6 ">
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className="text-sm ">Education *</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Havard"
+                    onChange={(e) => handleChange("education", e.target.value)}
+                    value={formData.education}
+                  />
+                </FormControl>
+              </FormItem>
+
+              <FormItem className="items-center justify-center  w-full">
+                <FormLabel className="w-60 text-sm ">Work History*</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Apple,google,amazon"
+                    onChange={(e) =>
+                      handleChange("work_history", e.target.value)
+                    }
+                    value={formData.work_history}
+                  />
+                </FormControl>
+              </FormItem>
+            </div>
+
             <FormItem className="items-center justify-center  w-full">
               <FormLabel className=" text-sm   ">Email *</FormLabel>
               <FormControl>
                 <Input
+                  placeholder="sotashinakamoto@gmail.com"
                   onChange={(e) => handleChange("email", e.target.value)}
                   value={formData.email}
                 />
@@ -509,6 +701,7 @@ function EditProfile() {
               <FormLabel className=" text-sm   ">Phone number *</FormLabel>
               <FormControl>
                 <Input
+                  placeholder="+123456789-0"
                   onChange={(e) => handleChange("phone_number", e.target.value)}
                   value={formData.phone_number}
                 />
@@ -519,6 +712,7 @@ function EditProfile() {
               <FormLabel className=" text-sm   ">Job Title*</FormLabel>
               <FormControl>
                 <Input
+                  placeholder="Designer"
                   onChange={(e) => handleChange("job_title", e.target.value)}
                   value={formData.job_title}
                 />
@@ -552,6 +746,7 @@ function EditProfile() {
               </FormLabel>
               <FormControl>
                 <Input
+                  placeholder="https://x.com/johndoe"
                   onChange={(e) => handleChange("x", e.target.value)}
                   value={formData.x}
                 />
@@ -569,6 +764,7 @@ function EditProfile() {
               </FormLabel>
               <FormControl>
                 <Input
+                  placeholder="https://www.instagram.com/johndoe"
                   onChange={(e) => handleChange("instagram", e.target.value)}
                   value={formData.instagram}
                 />
@@ -584,6 +780,7 @@ function EditProfile() {
               </FormLabel>
               <FormControl>
                 <Input
+                  placeholder="https://www.tiktok.com/@johndoe"
                   onChange={(e) => handleChange("tiktok", e.target.value)}
                   value={formData.tiktok}
                 />
@@ -599,6 +796,8 @@ function EditProfile() {
               </FormLabel>
               <FormControl>
                 <Input
+                  placeholder="https://www.youtube.com/user/johndoe
+                "
                   onChange={(e) => handleChange("youtube", e.target.value)}
                   value={formData.youtube}
                 />
@@ -616,6 +815,7 @@ function EditProfile() {
               </FormLabel>
               <FormControl>
                 <Input
+                  placeholder="https://www.linkedin.com/in/johndoe"
                   onChange={(e) => handleChange("linkedin", e.target.value)}
                   value={formData.linkedin}
                 />
@@ -692,8 +892,6 @@ function EditProfile() {
           </>
         )}
       </Form>
-    </>
+    </div>
   );
 }
-
-export default EditProfile;

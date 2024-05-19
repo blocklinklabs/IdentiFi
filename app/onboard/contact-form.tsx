@@ -170,72 +170,91 @@ export default function ContactForm() {
 
   async function onSubmit(e: any) {
     e.preventDefault();
-    // e.preventDefault();
-    // setLoading(true);
-    // try {
-    //   const basicInfo = {
-    //     firstName: formData.first_name,
-    //     lastName: formData.last_name,
-    //     email: formData.email,
-    //     homeAddress: formData.home_address,
-    //     dateOfBirth: formData.date_of_birth,
-    //     phoneNumber: formData.phone_number,
-    //   };
+    setLoading(true);
+    try {
+      const basicInfo = {
+        firstName: formData.first_name,
+        lastName: formData.last_name,
+        email: formData.email,
+        homeAddress: formData.home_address,
+        dateOfBirth: formData.date_of_birth,
+        phoneNumber: formData.phone_number,
+      };
 
-    //   const professionalInfo = {
-    //     education: formData.education,
-    //     workHistory: formData.work_history,
-    //     jobTitle: formData.job_title,
-    //     info: formData.info,
-    //     skills: formData.skills,
-    //     imageURL: imageUrls[0],
-    //   };
+      const professionalInfo = {
+        education: formData.education,
+        workHistory: formData.work_history,
+        jobTitle: formData.job_title,
+        info: formData.info,
+        skills: selectedOptions,
+        imageURL: formData.imageUrl,
+      };
 
-    //   const socialLinks = {
-    //     x: formData.x || "",
-    //     instagram: formData.instagram || "",
-    //     tiktok: formData.tiktok || "",
-    //     youtube: formData.youtube || "",
-    //     linkedin: formData.linkedin || "",
-    //   };
+      const socialLinks = {
+        x: formData.x || "",
+        instagram: formData.instagram || "",
+        tiktok: formData.tiktok || "",
+        youtube: formData.youtube || "",
+        linkedin: formData.linkedin || "",
+      };
 
-    //   const visibility = {
-    //     education: true,
-    //     workHistory: true,
-    //     phoneNumber: true,
-    //     homeAddress: true,
-    //     dateOfBirth: true,
-    //   };
+      const visibility = {
+        education: true,
+        workHistory: true,
+        phoneNumber: true,
+        homeAddress: true,
+        dateOfBirth: true,
+      };
 
-    //   if (
-    //     !formData.username ||
-    //     !basicInfo.firstName ||
-    //     !basicInfo.lastName ||
-    //     !basicInfo.email
-    //   ) {
-    //     throw new Error("Required fields are missing.");
-    //   }
+      if (
+        !formData.username ||
+        !basicInfo.firstName ||
+        !basicInfo.lastName ||
+        !basicInfo.email
+      ) {
+        throw new Error("Required fields are missing.");
+      }
 
-    //   const receipt = await createUser(
-    //     formData.username,
-    //     basicInfo,
-    //     professionalInfo,
-    //     socialLinks,
-    //     visibility
-    //   );
-    //   console.log("User created:", receipt);
-    //   toast({
-    //     title: "Success",
-    //     description: "User created successfully",
-    //   });
-    // } catch (error: any) {
-    //   toast({
-    //     title: "Error",
-    //     description: error.message || "Something went wrong",
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
+      const receipt = await createUser(
+        formData.username,
+        basicInfo,
+        professionalInfo,
+        socialLinks,
+        visibility
+      );
+      console.log("User created:", receipt);
+      toast({
+        title: "Success",
+        description: "User created successfully",
+      });
+      setFormData({
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+        home_address: "",
+        date_of_birth: "",
+        education: "",
+        work_history: "",
+        phone_number: "",
+        job_title: "",
+        x: "",
+        instagram: "",
+        tiktok: "",
+        youtube: "",
+        linkedin: "",
+        info: "",
+        skills: [],
+        imageUrl: "",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Something went wrong",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   const validateUrl = (url: any, pattern: any) => {
@@ -278,6 +297,7 @@ export default function ContactForm() {
   const handleSkillChange = (selected: any) => {
     if (selected.length <= 3) {
       setSelectedOptions(selected);
+
       handleChange("skills", selected);
     }
   };
