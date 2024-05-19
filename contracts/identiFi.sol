@@ -64,6 +64,7 @@ contract IdentiFi {
     mapping(address => string) private addressToUsername;
     mapping(string => bool) private usernames; // To check uniqueness of username
 
+
     modifier onlyUniqueUsername(string memory username) {
         require(!usernames[username], "Username already exists.");
         _;

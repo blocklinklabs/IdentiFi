@@ -1,13 +1,13 @@
 "use client";
 import Navbar from "@/components/navbar/navbar";
-import HeroSection from "./hero-section";
+import JobListing from "./hero-section";
 import Footer from "@/components/footer";
 
-const Profile = ({ params }: { params: { id: any } }) => {
+const Profile = () => {
   return (
     <div className="">
       <Navbar />
-      <HeroSection param={params.id} />
+      <JobListing  />
       <Footer />
     </div>
   );

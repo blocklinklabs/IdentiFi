@@ -19,15 +19,33 @@ import {
   PiSparkleLight,
   PiTargetLight,
 } from "react-icons/pi";
+import {
+  IconBriefcase,
+  IconIdBadge2,
+  IconLockSquareRounded,
+  IconShare,
+} from "@tabler/icons-react";
 
 const tabs = [
   {
     icon: (
-      <PiSparkleLight className="text-3xl mr-2 text-purple-600 bg-purple-100 p-1 rounded-md" />
+      <IconIdBadge2 className="w-8 h-8 mr-2 text-red-600 bg-red-100 p-1 rounded-md" />
     ),
-    name: "AI",
-    feature: "Now with Q&A",
-    description: "Ask literally anything. identiBot Will answer.",
+    name: "Create DID",
+    description: "Get your DID on the blockchain.",
+    more: (
+      <div className="text-red-600 flex items-center">
+        Learn more <PiArrowRight className="ml-1 text-sm" />
+      </div>
+    ),
+    image: "/assets/PlantDoodle.svg",
+  },
+  {
+    icon: (
+      <IconShare className="w-8 h-8 mr-2 text-purple-600 bg-purple-100 p-1 rounded-md" />
+    ),
+    name: "Share DID",
+    description: "Create ones, share and use everywhere ",
     more: (
       <div className="text-purple-600 flex items-center">
         Learn more <PiArrowRight className="ml-1 text-sm" />
@@ -37,21 +55,7 @@ const tabs = [
   },
   {
     icon: (
-      <PiBookOpenTextLight className="text-3xl mr-2 text-red-600 bg-red-100 p-1 rounded-md" />
-    ),
-    name: "Create ID",
-    description: "Get your DID on the blockchain.",
-    more: (
-      <div className="text-red-600 flex items-center">
-        Learn more <PiArrowRight className="ml-1 text-sm" />
-      </div>
-    ),
-    image: "/assets/PlantDoodle.svg",
-  },
-
-  {
-    icon: (
-      <PiTargetLight className="text-3xl mr-2 text-blue-600 bg-blue-100 p-1 rounded-md" />
+      <IconLockSquareRounded className="w-8 h-8 mr-2 text-blue-600 bg-blue-100 p-1 rounded-md" />
     ),
     name: "Privacy ",
     description: "Control who sees your information",
@@ -65,7 +69,7 @@ const tabs = [
   },
   {
     icon: (
-      <PiFileThin className="text-3xl mr-2 text-yellow-600 bg-yellow-100 p-1 rounded-md" />
+      <IconBriefcase className="w-8 h-8 mr-2 text-yellow-600 bg-yellow-100 p-1 rounded-md" />
     ),
     name: "Find Jobs",
     description: "Discover developer opportunities.",
@@ -145,58 +149,61 @@ const HeroSection = () => {
         />
       </div>
       {isSmallScreen ? (
-        <div className="px-8">
-          <div className="grid grid-cols-4   md:row-span-1  gap-4  xl:gap-6 mt-8   xl:px-0  ">
-            {tabs.map((tab) => (
-              <motion.div
-                key={tab.name}
-                className={`
-              flex 
-            p-1
-              md:p-8
-             
-      
-                cursor-pointer
-        
-                ${
-                  activeTab.name === tab.name
-                    ? "rounded-md md:rounded-xl bg-[#f6f5f4]  md:bg-white border-gray-200 md:border items-center justify-center flex p-1 "
-                    : "md:bg-[#f6f5f4]   rounded-md xl:rounded-xl p-1 items-center justify-center hover:bg-[#eae7e7] "
-                } `}
-                onClick={() => setActiveTab(tab)}
-              >
-                <div className="flex flex-col   items-center md:justify-center mx-auto">
-                  <div className="hidden md:flex text-4xl">{tab.icon}</div>
-                  <div className="font-medium text-sm  xl:text-lg mt-1">
-                    {tab.name}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="md:grid-cols-1 grid sm:grid-cols-2  place-content-center place-items-center mx-auto space-x-0  xl:space-x-4 items-center justify-between hover:cursor-pointer gap-4 w-4/5 xl:w-3/4 2xl:w-[55%]">
+          {tabs.map((tab) => (
+            <motion.div
+              key={tab.name}
+              className={`
+             xl:flex 
+             justify-center 
+             space-x-4
+             xl:pt-4
+             sm:my-10
+            
+             xl:my-0
+             w-60
+             h-36
+             ${
+               activeTab === tab
+                 ? "border rounded-xl pt-2 bg-white "
+                 : "shadow-md rounded-xl pt-2  bg-[#f6f5f4] m"
+             }
+           `}
+              onMouseEnter={() => setActiveTab(tab)}
+            >
+              <div className="px-4">
+                <div className="flex items-center">
+                  <div>{tab.icon}</div>
+                  <div className="text-2xl font-medium">{tab.name}</div>
 
-          {/* Display content based on the active tab */}
-          <div className="pt-6 md:py-10   lg:px-16 xl:px-0 md:px-16  w-full ">
-            {activeTab && (
-              <div className=" flex justify-center items-center flex-col  ">
-                <Image
-                  src={activeTab.image}
-                  width={1025}
-                  height={500}
-                  alt="logo"
-                  className="
-                w-full
-             border
-             p-20
-             xl:p-40
-             rounded-xl
-          
-             
-                "
-                />
+                  {/* Render feature tag only for "AI" tab */}
+                </div>
+
+                <motion.div
+                  className="flex flex-col text-sm"
+                  initial={{ y: 0 }}
+                  animate={{ y: activeTab === tab ? 10 : 25 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div>
+                    {/* Only animate the description */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {tab.description}
+                    </motion.div>
+                  </div>
+
+                  {/* Conditional rendering for "Learn more" link */}
+                  {/* {activeTab === tab && (
+                 <div className="text-sm mt-2">{tab.more}</div>
+               )} */}
+                </motion.div>
               </div>
-            )}
-          </div>
+            </motion.div>
+          ))}
         </div>
       ) : (
         <div className="flex  xl:space-x-4 items-center justify-between hover:cursor-pointer gap-4 w-4/5 xl:w-3/4 2xl:w-[55%]">
@@ -227,11 +234,6 @@ const HeroSection = () => {
                   <div className="text-2xl font-medium">{tab.name}</div>
 
                   {/* Render feature tag only for "AI" tab */}
-                  {tab.name === "AI" && (
-                    <div className="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full ml-2">
-                      {tab.feature}
-                    </div>
-                  )}
                 </div>
 
                 <motion.div
@@ -252,32 +254,15 @@ const HeroSection = () => {
                   </div>
 
                   {/* Conditional rendering for "Learn more" link */}
-                  {activeTab === tab && (
+                  {/* {activeTab === tab && (
                     <div className="text-sm mt-2">{tab.more}</div>
-                  )}
+                  )} */}
                 </motion.div>
               </div>
             </motion.div>
           ))}
         </div>
       )}
-
-      {/* Display content based on the active tab */}
-      <div className="hidden md:flex py-10 px-8 md:px-0    lg:w-3/4 2xl:w-[55%]">
-        {activeTab && (
-          <div
-            className=" 
-          p-20
-          xl:p-40
-          shadow-md
-          rounded-xl
-          bg-[#f6f5f4]  md:flex  items-center justify-center space-x-6 hover:cursor-pointer w-full"
-          >
-            <Image src={activeTab.image} width={200} height={200} alt="logo" />
-            <p>fdasfd</p>
-          </div>
-        )}
-      </div>
     </div>
   );
 };

@@ -20,10 +20,10 @@ const LandingPage = () => {
       {/* <FourthSection /> */}
       {/* <FifthSection /> */}
 
-      <SixthSection />
+      {/* <SixthSection /> */}
 
       {/* <GetStartedFree /> */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

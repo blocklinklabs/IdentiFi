@@ -19,7 +19,7 @@ export default function ContactForm() {
       name: "Jobs",
       component: (
         <>
-          <p>Settings</p>
+          <p>No Jobs</p>
         </>
       ),
     },

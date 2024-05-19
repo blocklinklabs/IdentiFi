@@ -11,7 +11,7 @@ import { useInView } from "framer-motion";
 
 import { useMediaQuery } from "react-responsive";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   PiArrowRight,
   PiBookOpenTextLight,
@@ -22,78 +22,27 @@ import {
 import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { IconZoomCheck } from "@tabler/icons-react";
-
-const tabs = [
-  {
-    icon: (
-      <PiSparkleLight className="text-3xl mr-2 text-purple-600 bg-purple-100 p-1 rounded-md" />
-    ),
-    name: "AI",
-    feature: "Now with Q&A",
-    description: "Ask literally anything. identiBot Will answer.",
-    more: (
-      <div className="text-purple-600 flex items-center">
-        Learn more <PiArrowRight className="ml-1 text-sm" />
-      </div>
-    ),
-    image: "/assets/GroovyDoodle.svg",
-  },
-  {
-    icon: (
-      <PiBookOpenTextLight className="text-3xl mr-2 text-red-600 bg-red-100 p-1 rounded-md" />
-    ),
-    name: "Create ID",
-    description: "Get your DID on the blockchain.",
-    more: (
-      <div className="text-red-600 flex items-center">
-        Learn more <PiArrowRight className="ml-1 text-sm" />
-      </div>
-    ),
-    image: "/assets/PlantDoodle.svg",
-  },
-
-  {
-    icon: (
-      <PiTargetLight className="text-3xl mr-2 text-blue-600 bg-blue-100 p-1 rounded-md" />
-    ),
-    name: "Privacy ",
-    description: "Control who sees your information",
-    more: (
-      <div className="text-blue-600 flex items-center">
-        Learn more <PiArrowRight className="ml-1 text-sm" />
-      </div>
-    ),
-
-    image: "/assets/CoffeeDoddle.svg",
-  },
-  {
-    icon: (
-      <PiFileThin className="text-3xl mr-2 text-yellow-600 bg-yellow-100 p-1 rounded-md" />
-    ),
-    name: "Find Jobs",
-    description: "Discover developer opportunities.",
-    more: (
-      <div className="text-yellow-600 flex items-center">
-        Learn more <PiArrowRight className="ml-1 text-sm" />
-      </div>
-    ),
-
-    image: "/assets/RunningDoodle.svg",
-  },
-];
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
   const ref = useRef(null);
+  const router = useRouter();
 
-  const [activeTab, setActiveTab] = useState(tabs[0]);
-
+  const [searchVal, setSearchVal] = useState("");
   const isSmallScreen = useMediaQuery({ maxWidth: 767 });
+
+  const onSumbitSearch = () => {
+    if (searchVal.length <= 0) {
+      alert(`Search value can't be empty`);
+    } else {
+      router.push(`/profile/${searchVal}`);
+    }
+  };
 
   return (
     <div className="md:items-center flex flex-col ">
       <div
         className="
-        
           font-medium
           2xl:w-1/3
           md:w-2/3
@@ -130,24 +79,27 @@ const HeroSection = () => {
             <Input
               className="border-2 border-black p-5"
               placeholder="Enter identiFiDID eg: mendsalbert"
-              // onChange={(e) => handleChange("last_name", e.target.value)}
-              // value={formData.last_name}
+              onChange={(e) => setSearchVal(e.target.value)}
+              value={searchVal}
             />
           </FormControl>
         </FormItem>
       </p>
 
       <div className="flex gap-4 pt-6 items-center justify-center">
-        <Link href="/">
-          <Button className="py-1 ">
-            <div className="flex items-center justify-center">
-              <div className="text-lg">Verify</div>
-              <div>
-                <IconZoomCheck className="ml-2" height={20} width={20} />
-              </div>
+        <Button
+          className="py-1 "
+          onClick={() => {
+            onSumbitSearch();
+          }}
+        >
+          <div className="flex items-center justify-center">
+            <div className="text-lg">Verify</div>
+            <div>
+              <IconZoomCheck className="ml-2" height={20} width={20} />
             </div>
-          </Button>
-        </Link>
+          </div>
+        </Button>
       </div>
 
       <div className="pt-10 xl:pt-20 items-center justify-center">

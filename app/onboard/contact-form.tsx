@@ -7,7 +7,6 @@ import * as z from "zod";
 import { Computer, ScreenShare, Share, Smile } from "lucide-react";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createUser } from "../../utils/queries";
 import {
   SelectContent,
   SelectItem,
@@ -42,8 +41,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { PiCheckLight } from "react-icons/pi";
 import Select from "react-select";
 import makeAnimated, { Placeholder } from "react-select/animated";
-import { create } from "@web3-storage/w3up-client";
-import { getWeb3StorageClient } from "../lib/web3storage";
+import {
+  getUserByAddress,
+  getUserByUsername,
+  createUser,
+  getUsernameByAddress,
+  editUser,
+} from "@/utils/queries";
+import { userInfo } from "os";
+import { useWallets } from "@privy-io/react-auth";
+import Link from "next/link";
+import { Toaster } from "@/components/ui/toaster";
 
 const animatedComponents = makeAnimated();
 
@@ -105,8 +113,9 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-export default function ContactForm() {
+export default function CreateProile() {
   const [countryCode, setCountryCode] = useState("");
+  const { ready, wallets } = useWallets();
 
   useEffect(() => {
     const fetchCountryCode = async () => {
@@ -144,12 +153,38 @@ export default function ContactForm() {
     linkedin: "",
     info: "",
     imageUrl: "",
-    skills: [
-      { value: "UI/UX" },
-      { value: "DevOps" },
-      { value: "FrontEnd Dev" },
-    ],
+    skills: ["UI/UX", "DevOps", "FrontEnd Dev"],
   });
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      let userInfo = (await getUserByAddress(wallets[0].address)) as any;
+      let username = (await getUsernameByAddress(wallets[0].address)) as any;
+      setFormData({
+        first_name: userInfo.basicInfo.firstName,
+        last_name: userInfo.basicInfo.lastName,
+        username: username,
+        email: userInfo.basicInfo.email,
+        home_address: userInfo.basicInfo.homeAddress,
+        date_of_birth: userInfo.basicInfo.dateOfBirth,
+        education: userInfo.professionalInfo.education,
+        work_history: userInfo.professionalInfo.workHistory,
+        phone_number: userInfo.basicInfo.phoneNumber,
+        job_title: userInfo.professionalInfo.jobTitle,
+        x: userInfo.socialLinks.x,
+        instagram: userInfo.socialLinks.instagram,
+        tiktok: userInfo.socialLinks.tiktok,
+        youtube: userInfo.socialLinks.youtube,
+        linkedin: userInfo.socialLinks.linkedin,
+        info: userInfo.professionalInfo.info,
+        skills: userInfo.professionalInfo.skills,
+        imageUrl: userInfo.professionalInfo.imageURL,
+      });
+      console.log(userInfo);
+      console.log(username);
+    };
+    getUserInfo();
+  }, []);
 
   const [validUrls, setValidUrls] = useState({
     x: false,
@@ -186,7 +221,7 @@ export default function ContactForm() {
         workHistory: formData.work_history,
         jobTitle: formData.job_title,
         info: formData.info,
-        skills: selectedOptions,
+        skills: formData.skills,
         imageURL: formData.imageUrl,
       };
 
@@ -224,28 +259,8 @@ export default function ContactForm() {
       );
       console.log("User created:", receipt);
       toast({
-        title: "Success",
-        description: "User created successfully",
-      });
-      setFormData({
-        first_name: "",
-        last_name: "",
-        username: "",
-        email: "",
-        home_address: "",
-        date_of_birth: "",
-        education: "",
-        work_history: "",
-        phone_number: "",
-        job_title: "",
-        x: "",
-        instagram: "",
-        tiktok: "",
-        youtube: "",
-        linkedin: "",
-        info: "",
-        skills: [],
-        imageUrl: "",
+        title: "",
+        description: receipt || "User created successfully",
       });
     } catch (error: any) {
       toast({
@@ -290,15 +305,16 @@ export default function ContactForm() {
         error = `Invalid ${name.charAt(0).toUpperCase() + name.slice(1)} URL`;
       }
     }
+    console.log(name, value);
 
     setErrors((prevErrors: any) => ({ ...prevErrors, [name]: error }));
   };
 
   const handleSkillChange = (selected: any) => {
     if (selected.length <= 3) {
+      const selectedValues = selected.map((option: any) => option.value);
       setSelectedOptions(selected);
-
-      handleChange("skills", selected);
+      handleChange("skills", selectedValues);
     }
   };
 
@@ -445,29 +461,20 @@ export default function ContactForm() {
         position: "relative",
         overflow: "hidden",
       }}
-      className="md:flex relative  justify-center pt-20 pb-20 px-16"
+      className="flex flex-col  md:flex-row items-center md:items-start justify-between space-y-4 md:space-y-0 md:space-x-10 pt-20 pb-20 px-4 md:px-16"
     >
       <div className="">
-        <div className="text-5xl font-medium w-2/3">
+        <div className="md:text-4xl text-xl font-medium w-3/3 pb-3">
           Creating a DID is a breeze with{" "}
           <span className="text-sky-500">identiFi</span>
         </div>
-        <div
-          className="
-              
-              py-4
-              text-gray-500
-                    "
-        >
-          Let&apos;s talk about how Bird can help your team work better.
-        </div>
-
-        <div className="flex flex-row items-start">
-          <div className="relative  border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
-            <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
-            <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
-            <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+        <Toaster />
+        <div className="flex justify-center md:justify-start">
+          <div className="relative border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+            <div className="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-s-lg"></div>
+            <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[124px] rounded-s-lg"></div>
+            <div className="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[178px] rounded-s-lg"></div>
+            <div className="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -right-[17px] top-[142px] rounded-e-lg"></div>
             <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
               <div className="flex flex-col items-center justify-center pt-4 mx-3">
                 <div className="text-center flex flex-col items-center justify-center">
@@ -486,17 +493,15 @@ export default function ContactForm() {
                 <div className="grid grid-cols-2 gap-2 py-2 w-full">
                   <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
                     <IconBriefcase width={17} height={17} />
-                    <p className="text-sm">
-                      {formData.job_title || "Company"}{" "}
-                    </p>
+                    <p className="text-sm">{formData.job_title || "Company"}</p>
                   </div>
                   <div className="flex flex-row items-center space-x-2 bg-gray-100 px-3 py-2 rounded-lg">
                     <IconMapPin width={17} height={17} />
-                    <p className="text-sm"> {countryCode} </p>
+                    <p className="text-sm">{countryCode}</p>
                   </div>
                 </div>
-                <div className=" flex flex-col w-full ">
-                  <div className="flex flex-row items-center bg-gray-100  space-x-2  px-3 py-2 rounded-lg">
+                <div className="flex flex-col w-full ">
+                  <div className="flex flex-row items-center bg-gray-100 space-x-2 px-3 py-2 rounded-lg">
                     <IconMail width={17} height={17} />
                     <p className="text-sm">
                       {formData.email || "identiFi@gmail.com"}
@@ -505,8 +510,7 @@ export default function ContactForm() {
                   <div className="flex flex-row items-center bg-gray-100 mt-2 space-x-2 px-3 py-2 rounded-lg">
                     <IconPhone width={17} height={17} />
                     <p className="text-sm">
-                      {" "}
-                      {formData.phone_number || "+00 123 456 789"}{" "}
+                      {formData.phone_number || "+00 123 456 789"}
                     </p>
                   </div>
                 </div>
@@ -515,11 +519,11 @@ export default function ContactForm() {
                   <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
                     Skills
                   </span>
-                </div>{" "}
+                </div>
                 <div className="grid grid-cols-2 gap-2 w-full ">
                   {formData.skills.map((skill: any) => (
-                    <div className="flex flex-row items-center bg-gray-100 w-max  space-x-2  px-3 py-2 rounded-lg">
-                      <p className="text-xs">{skill.value}</p>
+                    <div className="flex flex-row items-center bg-gray-100 w-max space-x-2 px-3 py-2 rounded-lg">
+                      <p className="text-xs">{skill}</p>
                     </div>
                   ))}
                 </div>
@@ -528,49 +532,65 @@ export default function ContactForm() {
                   <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
                     Socials
                   </span>
-                </div>{" "}
+                </div>
                 <div className="grid grid-cols-4 gap-2 pt-2 w-full">
-                  {validUrls.x && (
-                    <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                      <IconBrandX width={24} height={24} color="white" />
-                    </div>
+                  {formData.x && (
+                    <Link href={formData.x}>
+                      <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
+                        <IconBrandX width={24} height={24} color="white" />
+                      </div>
+                    </Link>
                   )}
-                  {validUrls.instagram && (
-                    <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                      <IconBrandInstagram
-                        width={24}
-                        height={24}
-                        color="white"
-                      />
-                    </div>
+                  {formData.instagram && (
+                    <Link href={formData.instagram}>
+                      <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
+                        <IconBrandInstagram
+                          width={24}
+                          height={24}
+                          color="white"
+                        />
+                      </div>
+                    </Link>
                   )}
-                  {validUrls.youtube && (
-                    <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                      <IconBrandYoutube width={24} height={24} color="white" />
-                    </div>
+                  {formData.youtube && (
+                    <Link href={formData.youtube}>
+                      <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
+                        <IconBrandYoutube
+                          width={24}
+                          height={24}
+                          color="white"
+                        />
+                      </div>
+                    </Link>
                   )}
-                  {validUrls.tiktok && (
-                    <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                      <IconBrandTiktok width={24} height={24} color="white" />
-                    </div>
+                  {formData.tiktok && (
+                    <Link href={formData.tiktok}>
+                      <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
+                        <IconBrandTiktok width={24} height={24} color="white" />
+                      </div>
+                    </Link>
                   )}
-                  {validUrls.linkedin && (
-                    <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
-                      <IconBrandLinkedin width={24} height={24} color="white" />
-                    </div>
+                  {formData.linkedin && (
+                    <Link href={formData.linkedin}>
+                      <div className="flex flex-row w-11 h-11 cursor-pointer items-center bg-black p-3 rounded-full">
+                        <IconBrandLinkedin
+                          width={24}
+                          height={24}
+                          color="white"
+                        />
+                      </div>
+                    </Link>
                   )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/*  */}
       </div>
 
-      <Form {...form}>
+      <Form {...form} className="w-full md:w-2/3">
         {!submitted ? (
-          <form onSubmit={onSubmit} className="space-y-4 w-5/6">
+          <form onSubmit={onSubmit} className="space-y-4 w-full">
             <div className="md:flex items-center gap-6 ">
               <FormItem className="items-center justify-center  w-full">
                 <FormLabel className="text-sm ">First name *</FormLabel>
@@ -771,8 +791,7 @@ export default function ContactForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://www.youtube.com/user/johndoe
-                "
+                  placeholder="https://www.youtube.com/user/johndoe"
                   onChange={(e) => handleChange("youtube", e.target.value)}
                   value={formData.youtube}
                 />
@@ -807,16 +826,6 @@ export default function ContactForm() {
                 />
               </FormControl>
             </FormItem>
-
-            <div className="flex gap-4 items-center">
-              <div>
-                <Checkbox className="text-[#6c6684]" />
-              </div>
-              <div className="text-xs font-light  md:w-3/4 mb-1">
-                I agree to Bird&apos; sending marketing communications related
-                to bird
-              </div>
-            </div>
 
             <div className="flex items-center gap-4">
               <Button

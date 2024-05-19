@@ -1,3 +1,8 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { useWallets } from "@privy-io/react-auth";
+import { usePrivy } from "@privy-io/react-auth";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -28,377 +33,60 @@ import {
   UserPlus,
   ArrowRight,
 } from "lucide-react";
+import { getUserByAddress } from "@/utils/queries";
 
 interface DropDownMenuProps {
   onClose: () => void;
 }
 
 const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose }) => {
+  const { ready, authenticated, login, logout } = usePrivy();
+  const disableLogin = !ready || (ready && authenticated);
+  const { wallets } = useWallets();
+  const [UserInfo, setUserInfo] = useState("");
+
   const handleLinkClick = () => {
     onClose();
   };
+  useEffect(() => {
+    const getUserInfo = async () => {
+      let userInfo = (await getUserByAddress(
+        ready ? wallets[0]?.address : "0x0"
+      )) as any;
+      setUserInfo(userInfo);
+    };
 
+    getUserInfo();
+  }, [ready, authenticated]);
   return (
-    <div className="w-screen h-screen bg-white  px-4 items-center justify-center absolute  right-0 xl:hidden">
+    <div className="w-screen h-screen bg-white  px-2 items-center justify-center absolute  right-0 xl:hidden">
       <Accordion
-       defaultValue="item-1"
+        defaultValue="item-1"
         className="
             pl-2
             "
         type="single"
         collapsible
       >
-        <AccordionItem className="mt-6 border-b" value="item-1">
-          <AccordionTrigger className="">Use Cases</AccordionTrigger>
-          <AccordionContent
-           defaultValue="item-1"
-          
-          
-          className="space-y-2">
-            <Link
-              href={"/team-alignment"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <UserPlus className="h-6 w-6 mr-4 text-orange-400" />
-              </div>
-              <div>Team alignment</div>
-            </Link>
-            <Link
-              href={"/sales"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <DollarSign className="h-6 w-6 mr-4 text-green-400" />
-              </div>
-
-              <div>Sales</div>
-            </Link>
-            <Link
-              href={"/engineering"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Code className="h-6 w-6 mr-4 text-indigo-400" />
-              </div>
-
-              <div>Engineering</div>
-            </Link>
-            <Link
-              href={"/design"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <PaintBucket className="h-6 w-6 mr-4 text-blue-400" />
-              </div>
-
-              <div>Design</div>
-            </Link>
-            <Link
-              href={"/marketing"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <BarChart className="h-6 w-6 mr-4 text-rose-400" />
-              </div>
-
-              <div>Marketing</div>
-            </Link>
-            <Link
-              href={"/product-management"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Settings className="h-6 w-6 mr-4 text-grey-400" />
-              </div>
-
-              <div>Product Management</div>
-            </Link>
-            <Link
-              href={"/support"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Headphones className="h-6 w-6 mr-4 text-amber-400" />
-              </div>
-
-              <div>Support</div>
-            </Link>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem className=" border-b" value="item-2">
-          <AccordionTrigger>For Business</AccordionTrigger>
-          <AccordionContent className="space-y-2">
-            <Link
-              href={"/team-alignment"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <UserPlus className="h-6 w-6 mr-4 text-orange-400" />
-              </div>
-              <div>Team alignment</div>
-            </Link>
-            <Link
-              href={"/sales"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <DollarSign className="h-6 w-6 mr-4 text-green-400" />
-              </div>
-
-              <div>Sales</div>
-            </Link>
-            <Link
-              href={"/engineering"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Code className="h-6 w-6 mr-4 text-indigo-400" />
-              </div>
-
-              <div>Engineering</div>
-            </Link>
-            <Link
-              href={"/design"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <PaintBucket className="h-6 w-6 mr-4 text-blue-400" />
-              </div>
-
-              <div>Design</div>
-            </Link>
-            <Link
-              href={"/marketing"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <BarChart className="h-6 w-6 mr-4 text-rose-400" />
-              </div>
-
-              <div>Marketing</div>
-            </Link>
-            <Link
-              href={"/product-management"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Settings className="h-6 w-6 mr-4 text-grey-400" />
-              </div>
-
-              <div>Product Management</div>
-            </Link>
-            <Link
-              href={"/support"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Headphones className="h-6 w-6 mr-4 text-amber-400" />
-              </div>
-
-              <div>Support</div>
-            </Link>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem className=" border-b" value="item-3">
-          <AccordionTrigger>Resources</AccordionTrigger>
-          <AccordionContent className="space-y-2">
-            <Link
-              href={"/team-alignment"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <UserPlus className="h-6 w-6 mr-4 text-orange-400" />
-              </div>
-              <div>Team alignment</div>
-            </Link>
-            <Link
-              href={"/sales"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <DollarSign className="h-6 w-6 mr-4 text-green-400" />
-              </div>
-
-              <div>Sales</div>
-            </Link>
-            <Link
-              href={"/engineering"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Code className="h-6 w-6 mr-4 text-indigo-400" />
-              </div>
-
-              <div>Engineering</div>
-            </Link>
-            <Link
-              href={"/design"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <PaintBucket className="h-6 w-6 mr-4 text-blue-400" />
-              </div>
-
-              <div>Design</div>
-            </Link>
-            <Link
-              href={"/marketing"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <BarChart className="h-6 w-6 mr-4 text-rose-400" />
-              </div>
-
-              <div>Marketing</div>
-            </Link>
-            <Link
-              href={"/product-management"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Settings className="h-6 w-6 mr-4 text-grey-400" />
-              </div>
-
-              <div>Product Management</div>
-            </Link>
-            <Link
-              href={"/support"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Headphones className="h-6 w-6 mr-4 text-amber-400" />
-              </div>
-
-              <div>Support</div>
-            </Link>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem className=" border-b" value="item-4">
-          <AccordionTrigger>Company</AccordionTrigger>
-          <AccordionContent className="space-y-2">
-            <Link
-              href={"/team-alignment"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <UserPlus className="h-6 w-6 mr-4 text-orange-400" />
-              </div>
-              <div>Team alignment</div>
-            </Link>
-            <Link
-              href={"/sales"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <DollarSign className="h-6 w-6 mr-4 text-green-400" />
-              </div>
-
-              <div>Sales</div>
-            </Link>
-            <Link
-              href={"/engineering"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Code className="h-6 w-6 mr-4 text-indigo-400" />
-              </div>
-
-              <div>Engineering</div>
-            </Link>
-            <Link
-              href={"/design"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <PaintBucket className="h-6 w-6 mr-4 text-blue-400" />
-              </div>
-
-              <div>Design</div>
-            </Link>
-            <Link
-              href={"/marketing"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <BarChart className="h-6 w-6 mr-4 text-rose-400" />
-              </div>
-
-              <div>Marketing</div>
-            </Link>
-            <Link
-              href={"/product-management"}
-              className="flex"
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Settings className="h-6 w-6 mr-4 text-grey-400" />
-              </div>
-
-              <div>Product Management</div>
-            </Link>
-            <Link
-              href={"/support"}
-              className="flex "
-              onClick={handleLinkClick}
-            >
-              <div>
-                <Headphones className="h-6 w-6 mr-4 text-amber-400" />
-              </div>
-
-              <div>Support</div>
-            </Link>
-          </AccordionContent>
-        </AccordionItem>
-
         <Link
-          href={"/pricing"}
+          href={"/"}
           className="
             flex
             flex-1
             items-center 
             justify-between
-     
-          
+     mt-11
+           pt-2
             py-4
             
             border-b
             "
         >
-          Pricing
-       
+          Home
         </Link>
 
         <Link
-          href={"/contact"}
+          href={"/jobs"}
           className="
             flex
             flex-1
@@ -412,33 +100,58 @@ const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose }) => {
       
             "
         >
-       Request a demo
-        
+          Jobs
+        </Link>
+
+        <Link
+          href={"/verify-identity"}
+          className="
+            flex
+            flex-1
+            items-center 
+            justify-between
+     
+          
+            py-4
+            
+            border-b
+            "
+        >
+          Verify Identity
         </Link>
       </Accordion>
 
       <div className="pt-12">
         <div className="  space-y-4 flex flex-col px-4">
-          <Link href={"/sign-in"}>
-            <Button
-              className="
+          {authenticated && UserInfo !== "User does not exist." ? (
+            <Link href={"/dashboard"}>
+              <Button
+                className="
               w-full
                   
                         "
-            >
-       Get bird free
+              >
+                Dashboard
+              </Button>
+            </Link>
+          ) : authenticated && UserInfo == "User does not exist." ? (
+            <Link href={"/onboard"}>
+              <Button variant={"outline"} className="w-full">
+                Get DID
+              </Button>
+            </Link>
+          ) : (
+            ""
+          )}
+          {authenticated ? (
+            <Button variant={"outline"} onClick={logout} className="w-full">
+              Disconnect
             </Button>
-          </Link>
-
-          <Link href={"/sign-in"}>
-            <Button
-            variant={"outline"}
-            className="w-full"
-        
-            >
-            Log in 
+          ) : (
+            <Button variant={"outline"} onClick={login} className="w-full">
+              Connect
             </Button>
-          </Link>
+          )}
         </div>
       </div>
     </div>

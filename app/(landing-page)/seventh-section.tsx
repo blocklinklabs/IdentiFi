@@ -8,6 +8,8 @@ import {
   PiFlagCheckeredFill,
   PiHouseFill,
   PiHouseLight,
+  PiShareLight,
+  PiUserCheck,
   PiWatchFill,
 } from "react-icons/pi";
 import Image from "next/image";
@@ -15,66 +17,47 @@ import Image from "next/image";
 const items = [
   {
     icon: <PiHouseFill className="text-2xl text-red-500" />,
-    name: "Company wiki",
+    name: "Social Profiles",
     button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
-      </div>
+      <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6"></div>
     ),
-    image: "/images/company-wiki-template.webp",
+    image: "/images/company-wiki.png",
   },
   {
-    icon: <PiFlagCheckeredFill className="text-2xl text-sky-600" />,
-    name: "Product roadmap",
+    icon: <PiUserCheck className="text-2xl text-sky-600" />,
+    name: " Secure Digital Identity",
     button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
+      <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6">
+        Create and manage your unique decentralized identifier (DID) on the
+        blockchain.
       </div>
     ),
   },
   {
     icon: <PiCheckCircleFill className="text-2xl text-orange-500" />,
-    name: "OKRs",
+    name: "Identity Verification ",
     button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
+      <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6">
+        Submit identity ID and get verified by trusted third parties.
       </div>
     ),
   },
   {
     icon: <PiClipboardLight className="text-2xl text-green-500" />,
-    name: "Meeting notes",
+    name: " Manage Your Profile",
     button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
+      <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6">
+        Update personal details and manage your credentials easily.
       </div>
     ),
   },
   {
-    icon: <PiAirplaneFill className="text-2xl text-red-500" />,
-    name: "Vacation Planner",
+    icon: <PiShareLight className="text-2xl text-red-500" />,
+    name: "Share Your Identity",
     button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
-      </div>
-    ),
-  },
-  {
-    icon: <PiCalendarCheckFill className="text-2xl text-emerald-500" />,
-    name: "Editorial calendar",
-    button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
-      </div>
-    ),
-  },
-
-  {
-    icon: <PiWatchFill className="text-2xl text-indigo-500" />,
-    name: "Habit tracker",
-    button: (
-      <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-        Get template <PiArrowRight className="ml-3 text-sm " />
+      <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6">
+        Share your verified digital identity securely with others and on all
+        social media accounts.
       </div>
     ),
   },
@@ -83,15 +66,15 @@ const items = [
 const SeventhSection = () => {
   return (
     <>
-      <div className="flex flex-col pt-32 items-center justify-center">
+      <div className="flex flex-col pt-32  items-center justify-center">
         <div className="text-3xl xl:text-5xl font-medium justify-center items-center flex">
           Endless ways to use it
         </div>
-        <div className="text-sky-500 flex items-center hover:underline hover:cursor-pointer pt-6">
-          Browse all templates <PiArrowRight className="ml-3 text-sm " />
+        <div className="text-sky-500 flex items-center  hover:cursor-pointer pt-6">
+          Learn How <PiArrowRight className="ml-3 text-sm " />
         </div>
       </div>
-      <div className="grid xl:grid-cols-4  md:grid-cols-2 md:row-span-1  gap-4  xl:gap-6 mt-8 px-8 md:px-16 xl:px-0 xl:w-3/4  2xl:w-[55%] mx-auto md:w-full">
+      <div className="grid xl:grid-cols-4 pb-32 md:grid-cols-2 md:row-span-1  gap-4  xl:gap-6 mt-8 px-8 md:px-16 xl:px-0 xl:w-3/4  2xl:w-[55%] mx-auto md:w-full">
         {items.map((item, index) => (
           <div
             key={index}
