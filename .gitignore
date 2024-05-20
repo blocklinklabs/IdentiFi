@@ -12,14 +12,15 @@
 # next.js
 /.next/
 /out/
-
+/legacySol
 # production
 /build
-
+secrete.txt
 # misc
 .DS_Store
 *.pem
-
+./secrete.txt
+/secrete.txt
 # debug
 npm-debug.log*
 yarn-debug.log*
