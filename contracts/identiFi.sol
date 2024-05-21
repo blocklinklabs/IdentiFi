@@ -126,7 +126,7 @@ contract IdentiFi is VRFConsumerBase {
         user.visibility = visibility;
         usernames[username] = true;
         addressToUsername[msg.sender] = username;
-        requestNewDID(); // Request a new DID for the user
+        requestNewDID(); // Request a new DID for the users
     }
 
     function editUser(
