@@ -196,8 +196,6 @@ export default function CreateProile() {
 
   const [errors, setErrors] = useState({}) as any;
 
-  //web3storage
-
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: formData,
