@@ -30,7 +30,7 @@ yarn-error.log*
 legacySol
 # local env files
 .env*.local
-
+secrete.txt
 # vercel
 .vercel
 

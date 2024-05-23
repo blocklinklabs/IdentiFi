@@ -21,6 +21,8 @@ module.exports = {
     zkEVMCardonaTestnet: {
       url: "https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public",
       accounts: [privateKey],
+      gas: 6000000,
+      gasPrice: 20000000000,
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
@@ -35,4 +37,5 @@ module.exports = {
   allowUnlimitedContractSize: true,
   throwOnTransactionFailures: true,
   throwOnCallFailures: true,
+  loggingEnabled: true,
 };
