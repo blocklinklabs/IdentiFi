@@ -12,7 +12,7 @@ import { PrivyProvider } from "@privy-io/react-auth";
 const font = Outfit({ subsets: ["latin"] });
 
 const Filecoin = defineChain({
-  id: 2442,
+  id: 314159,
   name: "Filecoin - Calibration testnett",
   network: "Filecoin - Calibration testnett",
   nativeCurrency: {
