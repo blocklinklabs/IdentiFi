@@ -11,37 +11,30 @@ import { cookieToInitialState } from "wagmi";
 import { PrivyProvider } from "@privy-io/react-auth";
 const font = Outfit({ subsets: ["latin"] });
 
-const zkEVMCardonaTestnet = defineChain({
-  id: 2442, // Replace this with your chain's ID
-  name: "Polygon zkEVM Cardona Testnet",
-  network: "Polygon zkEVM Cardona Testnet",
+const Filecoin = defineChain({
+  id: 2442,
+  name: "Filecoin - Calibration testnett",
+  network: "Filecoin - Calibration testnett",
   nativeCurrency: {
-    decimals: 18, // Replace this with the number of decimals for your chain's native token
-    name: "Polygon zkEVM Cardona Testnet",
-    symbol: "ETH",
+    decimals: 18,
+    name: "Filecoin - Calibration testnett",
+    symbol: "tFIL",
   },
   rpcUrls: {
     default: {
-      http: ["https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public"],
+      http: ["https://filecoin-calibration.chainup.net/rpc/v1"],
     },
   } as any,
   blockExplorers: {
-    default: { name: "Explorer", url: "https://cardona-zkevm.polygonscan.com" },
+    default: { name: "Explorer", url: "https://calibration.filscan.io" },
   },
 }) as any;
-
-// export const metadata: Metadata = {
-//   title: "Your Connected Workspace",
-//   description: "Bird - Simple and powerful notes & docs for teams",
-// };
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const initialState = cookieToInitialState(config, headers().get("cookie"));
-
   return (
     <html lang="en">
       <body className={font.className}>
@@ -58,8 +51,8 @@ export default function RootLayout({
             embeddedWallets: {
               createOnLogin: "users-without-wallets",
             },
-            defaultChain: zkEVMCardonaTestnet,
-            supportedChains: [zkEVMCardonaTestnet],
+            defaultChain: Filecoin,
+            supportedChains: [Filecoin],
           }}
         >
           {children}
