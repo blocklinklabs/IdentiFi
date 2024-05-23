@@ -15,52 +15,6 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const LiskSepolia = {
-  id: 4202,
-  name: "Lisk Sepolia Testnet",
-  network: "Lisk Sepolia Testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Lisk Sepolia Testnet",
-    symbol: "ETH",
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://rpc.sepolia-api.lisk.com"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Apothem Explorer",
-      url: "https://sepolia-blockscout.lisk.com",
-    },
-  },
-  testnet: true,
-} as any;
-
-const BitTorrent = {
-  id: 1029,
-  name: "BitTorrent Chain Donau",
-  network: "BitTorrent Chain Donau",
-  nativeCurrency: {
-    decimals: 18,
-    name: "BitTorrent Chain Donau",
-    symbol: "BTTC",
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://pre-rpc.bt.io/"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Apothem Explorer",
-      url: "https://testscan.bt.io",
-    },
-  },
-  testnet: true,
-} as any;
-
 const zkEVMCardonaTestnet = {
   id: 2442,
   name: "Polygon zkEVM Cardona Testnet",
@@ -85,7 +39,7 @@ const zkEVMCardonaTestnet = {
 } as any;
 
 export const config = defaultWagmiConfig({
-  chains: [BitTorrent],
+  chains: [zkEVMCardonaTestnet],
   projectId,
   metadata,
   ssr: true,
