@@ -11,22 +11,22 @@ import { cookieToInitialState } from "wagmi";
 import { PrivyProvider } from "@privy-io/react-auth";
 const font = Outfit({ subsets: ["latin"] });
 
-const BitTorrent = defineChain({
-  id: 1029, // Replace this with your chain's ID
-  name: "BitTorrent Chain Donau",
-  network: "BitTorrent Chain Donau",
+const zkEVMCardonaTestnet = defineChain({
+  id: 2442, // Replace this with your chain's ID
+  name: "Polygon zkEVM Cardona Testnet",
+  network: "Polygon zkEVM Cardona Testnet",
   nativeCurrency: {
     decimals: 18, // Replace this with the number of decimals for your chain's native token
-    name: "BitTorrent Chain Donau",
-    symbol: "BTTC",
+    name: "Polygon zkEVM Cardona Testnet",
+    symbol: "ETH",
   },
   rpcUrls: {
     default: {
-      http: ["https://pre-rpc.bt.io/"],
+      http: ["https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public"],
     },
   } as any,
   blockExplorers: {
-    default: { name: "Explorer", url: "https://testscan.bt.io" },
+    default: { name: "Explorer", url: "https://cardona-zkevm.polygonscan.com" },
   },
 }) as any;
 
@@ -58,8 +58,8 @@ export default function RootLayout({
             embeddedWallets: {
               createOnLogin: "users-without-wallets",
             },
-            defaultChain: BitTorrent,
-            supportedChains: [BitTorrent],
+            defaultChain: zkEVMCardonaTestnet,
+            supportedChains: [zkEVMCardonaTestnet],
           }}
         >
           {children}

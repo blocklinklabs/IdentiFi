@@ -258,7 +258,7 @@ export default function CreateProile() {
       console.log("User created:", receipt);
       toast({
         title: "",
-        description: receipt || "User created successfully",
+        description: "User created successfully",
       });
     } catch (error: any) {
       toast({
