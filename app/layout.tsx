@@ -12,11 +12,11 @@ import { PrivyProvider } from "@privy-io/react-auth";
 const font = Outfit({ subsets: ["latin"] });
 
 const zkEVMCardonaTestnet = defineChain({
-  id: 2442, // Replace this with your chain's ID
+  id: 2442,
   name: "Polygon zkEVM Cardona Testnet",
   network: "Polygon zkEVM Cardona Testnet",
   nativeCurrency: {
-    decimals: 18, // Replace this with the number of decimals for your chain's native token
+    decimals: 18,
     name: "Polygon zkEVM Cardona Testnet",
     symbol: "ETH",
   },
@@ -30,18 +30,11 @@ const zkEVMCardonaTestnet = defineChain({
   },
 }) as any;
 
-// export const metadata: Metadata = {
-//   title: "Your Connected Workspace",
-//   description: "Bird - Simple and powerful notes & docs for teams",
-// };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const initialState = cookieToInitialState(config, headers().get("cookie"));
-
   return (
     <html lang="en">
       <body className={font.className}>
