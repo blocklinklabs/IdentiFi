@@ -21,11 +21,13 @@ secrete.txt
 *.pem
 ./secrete.txt
 /secrete.txt
+/legacySol
+./legacySol
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+legacySol
 # local env files
 .env*.local
 

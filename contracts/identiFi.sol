@@ -1,11 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+
 import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBase.sol";
+
+interface IBatch {
+    function batchAll(
+        address[] calldata to,
+        uint256[] calldata value,
+        bytes[] calldata callData,
+        uint64[] calldata gasLimit
+    ) external returns (bool success);
+}
+
 contract IdentiFi is VRFConsumerBase {
     bytes32 internal keyHash;
     uint256 internal fee;
     mapping(bytes32 => address) public requestIdToSender;
     mapping(address => uint256) public addressToDID;
+
+    IBatch public batch;
 
     struct User {
         string firstName;
@@ -78,10 +91,12 @@ contract IdentiFi is VRFConsumerBase {
         address _vrfCoordinator,
         address _linkToken,
         bytes32 _keyHash,
-        uint256 _fee
+        uint256 _fee,
+        address _batch
     ) VRFConsumerBase(_vrfCoordinator, _linkToken) {
         keyHash = _keyHash;
         fee = _fee;
+        batch = IBatch(_batch);
     }
 
     function requestNewDID() public returns (bytes32 requestId) {
@@ -126,7 +141,41 @@ contract IdentiFi is VRFConsumerBase {
         user.visibility = visibility;
         usernames[username] = true;
         addressToUsername[msg.sender] = username;
-        requestNewDID(); // Request a new DID for the users
+        requestNewDID(); // Request a new DID for the user
+    }
+
+    function batchCreateUsers(
+        string[] memory usernames,
+        BasicInfo[] memory basicInfos,
+        ProfessionalInfo[] memory professionalInfos,
+        SocialLinks[] memory socialLinksArray,
+        Visibility[] memory visibilities
+    ) public {
+        require(usernames.length == basicInfos.length, "Input arrays must have the same length");
+        require(basicInfos.length == professionalInfos.length, "Input arrays must have the same length");
+        require(professionalInfos.length == socialLinksArray.length, "Input arrays must have the same length");
+        require(socialLinksArray.length == visibilities.length, "Input arrays must have the same length");
+
+        address[] memory to = new address[](usernames.length);
+        uint256[] memory value = new uint256[](usernames.length);
+        bytes[] memory callData = new bytes[](usernames.length);
+        uint64[] memory gasLimit = new uint64[](usernames.length);
+
+        for (uint i = 0; i < usernames.length; i++) {
+            to[i] = address(this);
+            value[i] = 0;
+            callData[i] = abi.encodeWithSelector(
+                this.createUser.selector,
+                usernames[i],
+                basicInfos[i],
+                professionalInfos[i],
+                socialLinksArray[i],
+                visibilities[i]
+            );
+            gasLimit[i] = 0; // Forward all remaining gas
+        }
+
+        require(batch.batchAll(to, value, callData, gasLimit), "Batch transaction failed");
     }
 
     function editUser(
@@ -237,5 +286,5 @@ contract IdentiFi is VRFConsumerBase {
     function getVisibility(string memory username) public view returns (Visibility memory) {
         require(users[username].exists, "User does not exist.");
         return users[username].visibility;
-     }
     }
+}
