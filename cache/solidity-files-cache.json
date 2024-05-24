@@ -2,9 +2,87 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/albertmends/Documents/identiFi/contracts/identiFi.sol": {
-      "lastModificationDate": 1716475168176,
-      "contentHash": "48d315b2b03c049b7082a6ecfb234c6c",
+      "lastModificationDate": 1716489230383,
+      "contentHash": "ceaf481ea50bc6df200cf87730eb5094",
       "sourceName": "contracts/identiFi.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IBatch",
+        "IdentiFi"
+      ]
+    },
+    "/Users/albertmends/Documents/identiFi/node_modules/@chainlink/contracts/src/v0.8/vrf/VRFConsumerBase.sol": {
+      "lastModificationDate": 1716474566309,
+      "contentHash": "1caa33b3ba2b08a41a92427d6429e4f8",
+      "sourceName": "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBase.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../shared/interfaces/LinkTokenInterface.sol",
+        "./VRFRequestIDBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFConsumerBase"
+      ]
+    },
+    "/Users/albertmends/Documents/identiFi/node_modules/@chainlink/contracts/src/v0.8/vrf/VRFRequestIDBase.sol": {
+      "lastModificationDate": 1716474566310,
+      "contentHash": "647370c8808aa5ea8c36aab8cfcaddcc",
+      "sourceName": "@chainlink/contracts/src/v0.8/vrf/VRFRequestIDBase.sol",
       "solcConfig": {
         "version": "0.8.24",
         "settings": {
@@ -34,7 +112,43 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "IdentiFi"
+        "VRFRequestIDBase"
+      ]
+    },
+    "/Users/albertmends/Documents/identiFi/node_modules/@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol": {
+      "lastModificationDate": 1716474579694,
+      "contentHash": "d10c0d716a0f43bb442c14effc9bd39f",
+      "sourceName": "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "LinkTokenInterface"
       ]
     }
   }
