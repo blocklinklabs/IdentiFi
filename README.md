@@ -35,9 +35,9 @@ identiFi introduces a revolutionary approach to digital identity management by l
 identiFi is developed using the latest in blockchain and decentralized storage technology:
 
 - **Blockchain Backend:** Developed using Solidity, smart contracts on Ethereum provide a secure and decentralized backend for identity management.
+- **Monobean:** Utilized for batch transactions, ensuring efficient and cost-effective operations.
 - **Chainlink VRF:** Used to generate unique DIDs for users.
 - **IPFS:** All user images are stored on IPFS to ensure decentralized and secure storage.
-- **Monobean:** Utilized for batch transactions, ensuring efficient and cost-effective operations.
 
 ### Prerequisite
 
@@ -96,31 +96,32 @@ Navigate to `http://localhost:3000` in your web browser.
 
 To deploy to a test or main network, update the configurations located in `hardhat.config.js` to use a private key and, optionally, deploy to a private RPC like Infura.
 
-```bash
-require('@nomiclabs/hardhat-waffle');
-const privateKey = 'xx';
-const projectId = 'xx';
+```javascript
+require("@nomiclabs/hardhat-waffle");
+const fs = require("fs");
+const { ethers } = require("ethers");
+
+// Replace with your actual seed phrase
+const seedPhrase = "your seed phrase here";
+const wallet = ethers.Wallet.fromMnemonic(seedPhrase);
+const privateKey = wallet.privateKey;
 
 module.exports = {
-  defaultNetwork: 'hardhat',
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
-      chainId: 1337,
+      chainId: 1029,
     },
-    "your-testnet": {
-      url: 'test-net-rpc-url',
+
+    zkEVMCardonaTestnet: {
+      url: "https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public",
       accounts: [privateKey],
     },
   },
-  solidity: {
-    version: '0.8.4',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
+  solidity: "0.8.24",
+  allowUnlimitedContractSize: true,
+  throwOnTransactionFailures: true,
+  throwOnCallFailures: true,
 };
 ```
 
