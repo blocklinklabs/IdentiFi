@@ -172,7 +172,7 @@ contract IdentiFi is VRFConsumerBase {
                 socialLinksArray[i],
                 visibilities[i]
             );
-            gasLimit[i] = 0; // Forward all remaining gas
+            gasLimit[i] = 0; 
         }
 
         require(batch.batchAll(to, value, callData, gasLimit), "Batch transaction failed");
