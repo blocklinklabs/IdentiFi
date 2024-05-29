@@ -67,16 +67,12 @@ npm install
 3. Compile the Contracts
 
 ```bash
-truffle compile
-# or if using Hardhat
 npx hardhat compile
 ```
 
 4. Deploy the Contracts
 
 ```bash
-truffle migrate --network yourNetwork
-# or if using Hardhat
 npx hardhat run scripts/deploy.js --network yourNetwork
 ```
 
@@ -98,21 +94,12 @@ To deploy to a test or main network, update the configurations located in `hardh
 
 ```javascript
 require("@nomiclabs/hardhat-waffle");
-const fs = require("fs");
 const { ethers } = require("ethers");
-
-// Replace with your actual seed phrase
-const seedPhrase = "your seed phrase here";
-const wallet = ethers.Wallet.fromMnemonic(seedPhrase);
 const privateKey = wallet.privateKey;
 
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {
-      chainId: 1029,
-    },
-
     zkEVMCardonaTestnet: {
       url: "https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public",
       accounts: [privateKey],
