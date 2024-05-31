@@ -21,11 +21,9 @@ identiFi introduces a revolutionary approach to digital identity management by l
 
 - **Decentralized Identifiers (DIDs):** Create and manage unique DIDs on the blockchain.
 - **Identity Verification:** Submit identity documents for verification by trusted third parties.
-- **Credential Issuance:** Request and receive verifiable credentials such as certificates and licenses.
-- **Credential Verification:** Verify the authenticity of credentials using cryptographic proofs.
+- **Credential Verification:** Verify the authenticity of credentials
 - **User Profile Management:** Update personal details and manage credentials easily.
 - **Privacy Controls:** Control who can access identity information and under what circumstances.
-- **Cross-Platform Support:** Access and use the app across different devices and platforms.
 - **Security Measures:** Strong security measures including encryption and secure key management.
 - **Social Media Integration:** Share your verified digital identity on various social media platforms.
 - **Profile Editing:** Easily update and manage your digital identity profile.
