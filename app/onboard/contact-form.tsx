@@ -444,7 +444,6 @@ export default function CreateProile() {
       const fileUrl = `https://gateway.pinata.cloud/ipfs/${responseData.IpfsHash}`;
       console.log(fileUrl);
 
-      // Set the image URL in the form data
       setFormData((prev) => ({ ...prev, imageUrl: fileUrl }));
     } catch (error) {
       console.error("Error uploading image:", error);
