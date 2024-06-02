@@ -44,7 +44,7 @@ identiFi is developed using the latest in blockchain and decentralized storage t
 - [npm](https://www.npmjs.com/ "npm ") Installed
 - [Hardhat](https://hardhat.org/ "Hardhat ") Installed
 - Metamask (or any other Ethereum wallet)
-- Chainlink VRF setup (with LINK tokens)
+- Chainlink VRF setup
 - IPFS setup
 
 ### Installation Steps
